@@ -4,5 +4,5 @@ from events.views import dashboard
 
 urlpatterns = [
 path('admin/', admin.site.urls),
-path('dashboard/',dashboard)
+path('dashboard/',dashboard, name='dashboard')
 ]
