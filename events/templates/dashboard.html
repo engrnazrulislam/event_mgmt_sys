@@ -1,65 +1,19 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static "css/output.css" %}">
     <title>Dashboard</title>
-</head>
-<body class="bg-gray-100 text-gray-800">
-  <div class="max-w-7xl mx-auto p-6">
-    <!-- Title -->
-    <h1 class="text-3xl font-bold mb-6">📊 Event Management Dashboard</h1>
-
-    <!-- Summary Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-      <div class="bg-white rounded-2xl shadow-md p-6 text-center">
-        <h2 class="text-xl font-semibold">Events</h2>
-        <p class="text-3xl font-bold text-blue-600">{{ total_events }}</p>
-      </div>
-      <div class="bg-white rounded-2xl shadow-md p-6 text-center">
-        <h2 class="text-xl font-semibold">Participants</h2>
-        <p class="text-3xl font-bold text-green-600">{{ total_participants }}</p>
-      </div>
-      <div class="bg-white rounded-2xl shadow-md p-6 text-center">
-        <h2 class="text-xl font-semibold">Categories</h2>
-        <p class="text-3xl font-bold text-purple-600">{{ total_categories }}</p>
-      </div>
-    </div>
-
-    <!-- Recent Events Table -->
-    <div class="bg-white rounded-2xl shadow-md p-6">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-semibold">Recent Events</h2>
-        {% comment %} <a href="{% url 'event_create' %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">+ Add Event</a> {% endcomment %}
-        <a href=" " class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">+ Add Event</a>
-      </div>
-      <table class="min-w-full table-auto border">
-        <thead>
-          <tr class="bg-gray-200 text-left text-sm font-semibold">
-            <th class="px-4 py-2 border">Name</th>
-            <th class="px-4 py-2 border">Date</th>
-            <th class="px-4 py-2 border">Location</th>
-            <th class="px-4 py-2 border">Category</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for event in recent_events %}
-          <tr class="border-b hover:bg-gray-50 text-sm">
-            <td class="px-4 py-2 border">{{ event.name }}</td>
-            <td class="px-4 py-2 border">{{ event.date }}</td>
-            <td class="px-4 py-2 border">{{ event.location }}</td>
-            <td class="px-4 py-2 border">{{ event.category.name }}</td>
-          </tr>
-          {% empty %}
-          <tr>
-            <td colspan="4" class="text-center py-4 text-gray-500">No events found</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-</div>
-</body>
+  </head>
+  <body>
+    <nav></nav>
+    <main>
+      <button class="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-900">
+        Button
+      </button>
+    </main>
+    <footer></footer>
+  </body>
 </html>
