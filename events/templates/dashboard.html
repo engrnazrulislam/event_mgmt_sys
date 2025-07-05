@@ -7,67 +7,76 @@
     <link rel="stylesheet" href="{% static "css/output.css" %}">
     <title>Dashboard</title>
   </head>
-  <body class="container mx-auto bg-slate-200">
+  <body class="container mx-auto bg-neutral-100 p-8">
     <nav>
-      <div class="navbar bg-slate-200 pt-8">
+      {% comment %} Navbar Section {% endcomment %}
+      <div class="navbar pt-8">
         <div class="flex-1">
           <a class="btn btn-ghost normal-case text-xl">Dashboard</a>
         </div>
         <div class="flex-none gap-2">
+          <div>
+            <a href="" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case">Events</a>
+            <a href="" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case">Participants</a>
+            <a href="" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case">Category</a>
+          </div>
           <div class="form-control">
             <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto"/>
           </div>
-          <div class="dropdown dropdown-end">
-            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-              <div class="w-10 rounded-full">
-                <img src="{% static "images/prof.jpg" %}" />
-              </div>
-            </label>
-            <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-              <li>
-                <a class="justify-between">Profile</a>
-              </li>
-              <li><a>Settings</a></li>
-              <li><a>Logout</a></li>
-            </ul>
+          <div>
+            <button class="btn btn-outline btn-success normal-case">Search</button>
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-4 grid-flow-col gap-4 p-4">
-          <div class="card w-75 bg-base-100 shadow-xl">
-            <div class="card-body">
-              <h2 class="card-title">Card title!</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">Buy Now</button>
-              </div>
+      {% comment %} Grid Stats Section {% endcomment %}
+      <div class="grid grid-cols-4 grid-flow-col gap-4">
+
+          <div class="stats shadow p-4">
+              <div class="stat">
+                <div class="stat-figure text-secondary">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                  </svg>
+                </div>
+                <div class="stat-title text-xl">Total Participants:</div>
+                <div class="stat-value">31K</div>
+                <div class="stat-desc">Jan 1st - Feb 1st</div>
             </div>
           </div>
-          <div class="card w-75 bg-base-100 shadow-xl">
-            <div class="card-body">
-              <h2 class="card-title">Card title!</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">Buy Now</button>
-              </div>
+          <div class="stats shadow p-4">
+              <div class="stat">
+                <div class="stat-figure text-secondary">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                  </svg>
+                </div>
+                <div class="stat-title text-xl">Total Events:</div>
+                <div class="stat-value">31K</div>
+                <div class="stat-desc">Jan 1st - Feb 1st</div>
             </div>
           </div>
-          <div class="card w-75 bg-base-100 shadow-xl">
-            <div class="card-body">
-              <h2 class="card-title">Card title!</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">Buy Now</button>
-              </div>
+          <div class="stats shadow p-4">
+              <div class="stat">
+                <div class="stat-figure text-secondary">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                  </svg>
+                </div>
+                <div class="stat-title text-xl">Upcoming Events:</div>
+                <div class="stat-value">31K</div>
+                <div class="stat-desc">Jan 1st - Feb 1st</div>
             </div>
           </div>
-          <div class="card w-75 bg-base-100 shadow-xl">
-            <div class="card-body">
-              <h2 class="card-title">Card title!</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">Buy Now</button>
-              </div>
+          <div class="stats shadow p-4">
+              <div class="stat">
+                <div class="stat-figure text-secondary">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                  </svg>
+                </div>
+                <div class="stat-title text-xl">Past events:</div>
+                <div class="stat-value">31K</div>
+                <div class="stat-desc">Jan 1st - Feb 1st</div>
             </div>
           </div>
       </div>
