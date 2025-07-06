@@ -15,13 +15,15 @@ def dashboard(request):
             num_events=Count('id',distinct=True),
             num_participants=Count('participants',distinct=True),
             )
+    today_date=date.today()
     context = {
         'dashboard_name':"Dashboard",
         'total_events': counts['num_events'],
         'total_participants': counts['num_participants'],
         'past_events':data.filter(date__lt=date.today()).count(),
         'upcoming_events': data.filter(date__gt=date.today()).count(),
-        'data':data
+        'data':data,
+        'today_date':today_date,
     }
     return render(request, 'dashboard.html', context)
 

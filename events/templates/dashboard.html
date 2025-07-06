@@ -76,26 +76,16 @@
               </thead>
               <tbody>
                 <!-- row 1 -->
-                <tr class="hover">
-                  <th>1</th>
-                  <td>Cy Ganderton</td>
-                  <td>Quality Control Specialist</td>
-                  <td>Blue</td>
-                </tr>
-                <!-- row 2 -->
-                <tr class="hover">
-                  <th>2</th>
-                  <td>Hart Hagerty</td>
-                  <td>Desktop Support Technician</td>
-                  <td>Purple</td>
-                </tr>
-                <!-- row 3 -->
-                <tr>
-                  <th>3</th>
-                  <td>Brice Swyre</td>
-                  <td>Tax Accountant</td>
-                  <td>Red</td>
-                </tr>
+                {% for event in data %}
+                  
+                      <tr class="hover">
+                        <th>{{event.id}}</th>
+                        <td>{{event.name}}</td>
+                        <td>{{event.description}}</td>
+                        <td>{{event.location}}</td>
+                      </tr>
+                    
+                {% endfor %}
               </tbody>
             </table>
        </div>
@@ -116,26 +106,14 @@
               </thead>
               <tbody>
                 <!-- row 1 -->
+                 {% for event in data %}
                 <tr class="hover">
-                  <th>1</th>
-                  <td>Cy Ganderton</td>
-                  <td>Quality Control Specialist</td>
-                  <td>Blue</td>
+                  <th>{{event.id}}</th>
+                  <td>{{event.name}}</td>
+                  <td>{{event.description}}</td>
+                  <td>{{event.location}}</td>
                 </tr>
-                <!-- row 2 -->
-                <tr class="hover">
-                  <th>2</th>
-                  <td>Hart Hagerty</td>
-                  <td>Desktop Support Technician</td>
-                  <td>Purple</td>
-                </tr>
-                <!-- row 3 -->
-                <tr>
-                  <th>3</th>
-                  <td>Brice Swyre</td>
-                  <td>Tax Accountant</td>
-                  <td>Red</td>
-                </tr>
+                {% endfor %}
               </tbody>
             </table>
        </div>
