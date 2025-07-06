@@ -10,7 +10,20 @@ from django.db.models import Count
 #     return render(request,'dashboard.html')
 
 def dashboard(request):
-    data= Event.objects.all()
+    type=request.GET.get('type','all')
+    base_query = Event.objects
+    if type=='total_events':
+        events_data = base_query.all()
+    elif type == 'upcoming_events':
+        events_data = base_query.filter(date__gt=date.today()).all()
+    elif type == 'past_events':
+        events_data = base_query.filter(date__lt=date.today()).all()
+    elif type == 'all':
+        events_data = base_query.all()
+    
+    # by default Data
+    data= base_query.all()
+
     counts = Event.objects.aggregate(
             num_events=Count('id',distinct=True),
             num_participants=Count('participants',distinct=True),
@@ -24,6 +37,10 @@ def dashboard(request):
         'upcoming_events': data.filter(date__gt=date.today()).count(),
         'data':data,
         'today_date':today_date,
+        'events_data':{
+            "e_data":events_data,
+            "d_type": type
+            },
     }
     return render(request, 'dashboard.html', context)
 

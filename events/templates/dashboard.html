@@ -12,8 +12,9 @@
     
     {% comment %} Grid Stats Section {% endcomment %}
       <div class="grid grid-cols-1 grid-flow-row lg:grid-cols-4 lg:grid-flow-col gap-4 ">
-
-          <div class="stats shadow p-4">
+          
+          <a href="{% url "dashboard" %}" role="button">
+          <div class="stats shadow p-4 w-full">
               <div class="stat">
                 <div class="stat-figure text-primary">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
@@ -24,7 +25,10 @@
                 <div class="stat-value text-primary">{{total_participants}}</div>
             </div>
           </div>
-          <div class="stats shadow p-4">
+          </a>
+
+          <a href="{% url "dashboard" %}?type=total_events" role="button">
+          <div class="stats shadow p-4 w-full">
               <div class="stat">
                 <div class="stat-figure text-secondary">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -35,7 +39,10 @@
                 <div class="stat-value text-secondary">{{total_events}}</div>
             </div>
           </div>
-          <div class="stats shadow p-4">
+          </a>
+          
+          <a href="{% url "dashboard" %}?type=upcoming_events"role="button">
+          <div class="stats shadow p-4 w-full">
               <div class="stat">
                 <div class="stat-figure text-warning">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -46,7 +53,10 @@
                 <div class="stat-value text-warning">{{upcoming_events}}</div>
             </div>
           </div>
-          <div class="stats shadow p-4">
+          </a>
+
+          <a href="{% url "dashboard" %}?type=past_events"role="button">
+          <div class="stats shadow p-4 w-full">
               <div class="stat">
                 <div class="stat-figure text-success">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -57,6 +67,8 @@
                 <div class="stat-value text-success">{{past_events}}</div>
             </div>
           </div>
+          </a>
+
       </div>
 
     {% comment %} Todays Event Lists  {% endcomment %}
@@ -77,14 +89,14 @@
               <tbody>
                 <!-- row 1 -->
                 {% for event in data %}
-                  
+                  {% if event.date == today_date %}
                       <tr class="hover">
                         <th>{{event.id}}</th>
                         <td>{{event.name}}</td>
                         <td>{{event.description}}</td>
                         <td>{{event.location}}</td>
                       </tr>
-                    
+                    {% endif %}
                 {% endfor %}
               </tbody>
             </table>
@@ -94,7 +106,16 @@
           <table class="table table-auto bg-base-100">
               <!-- head -->
             <caption class="caption-top text-start text-xl font-bold p-4">
-            All Events:
+            {% if events_data.d_type == "total_events" %}
+            <span>Total Events:</span>
+            {% elif events_data.d_type == "upcoming_events" %}
+            <span>Up Coming Events:</span>
+            {% elif events_data.d_type == "past_events" %}
+            <span>Past Events:</span>
+            {% else %}
+            <span>All Events:</span>
+            {% endif %}
+
             </caption>
               <thead>
                 <tr>
@@ -106,7 +127,7 @@
               </thead>
               <tbody>
                 <!-- row 1 -->
-                 {% for event in data %}
+                 {% for event in events_data.e_data %}
                 <tr class="hover">
                   <th>{{event.id}}</th>
                   <td>{{event.name}}</td>
