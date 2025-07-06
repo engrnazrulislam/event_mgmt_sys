@@ -1,18 +1,27 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from events.models import Event, Participant, Category
+from datetime import date
+from django.db.models import Count
+
 
 # Create your views here.
 # def dashboard(request):
 #     return render(request,'dashboard.html')
 
 def dashboard(request):
+    data= Event.objects.all()
+    counts = Event.objects.aggregate(
+            num_events=Count('id',distinct=True),
+            num_participants=Count('participants',distinct=True),
+            )
     context = {
         'dashboard_name':"Dashboard",
-        'total_events': Event.objects.count(),
-        'total_participants': Participant.objects.count(),
-        'total_categories': Category.objects.count(),
-        'recent_events': Event.objects.order_by('-date')[:5].count(),
+        'total_events': counts['num_events'],
+        'total_participants': counts['num_participants'],
+        'past_events':data.filter(date__lt=date.today()).count(),
+        'upcoming_events': data.filter(date__gt=date.today()).count(),
+        'data':data
     }
     return render(request, 'dashboard.html', context)
 
