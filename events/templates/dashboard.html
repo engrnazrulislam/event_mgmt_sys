@@ -1,34 +1,16 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static "css/output.css" %}">
-    <title>Dashboard</title>
-  </head>
-  <body class=" bg-neutral-100 p-8">
-    <nav class="container mx-auto ">
-      {% comment %} Navbar Section {% endcomment %}
-      <div class="navbar pt-8">
+{% extends "base_dashboard.html" %}
+{% block title %}Organizer Dashboard{% endblock title %}
+    {% block dashboard_btn %}
         <div class="flex-1">
-          <a class="btn btn-ghost normal-case text-xl">Dashboard</a>
+          <a href="{% url "dashboard" %}"class="btn btn-ghost normal-case text-xl">{{dashboard_name}}</a>
         </div>
-        <div class="flex-none gap-2">
-          <div>
-            <a href="" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case">Events</a>
-            <a href="" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case">Participants</a>
-            <a href="" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case">Category</a>
-          </div>
-          <div class="form-control">
-            <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto"/>
-          </div>
-          <div>
-            <button class="btn btn-outline btn-success normal-case">Search</button>
-          </div>
+        <div class="flex-none">
+          <a href="{% url "user_dashboard" %}"class="btn btn-ghost normal-case text-xl">Home</a>
         </div>
-      </div>
-      {% comment %} Grid Stats Section {% endcomment %}
+    {% endblock dashboard_btn %}
+    {% block stats %}
+    
+    {% comment %} Grid Stats Section {% endcomment %}
       <div class="grid grid-cols-1 grid-flow-row lg:grid-cols-4 lg:grid-flow-col gap-4 ">
 
           <div class="stats shadow p-4">
@@ -39,7 +21,7 @@
                   </svg>
                 </div>
                 <div class="stat-title text-xl font-bold">Total Participants:</div>
-                <div class="stat-value text-primary">31K</div>
+                <div class="stat-value text-primary">{{total_participants}}</div>
                 <div class="stat-desc ">Jan 1st - Feb 1st</div>
             </div>
           </div>
@@ -51,7 +33,7 @@
                   </svg>
                 </div>
                 <div class="stat-title text-xl font-bold">Total Events:</div>
-                <div class="stat-value text-secondary">31K</div>
+                <div class="stat-value text-secondary">{{total_events}}</div>
                 <div class="stat-desc">Jan 1st - Feb 1st</div>
             </div>
           </div>
@@ -63,7 +45,7 @@
                   </svg>
                 </div>
                 <div class="stat-title text-xl font-bold">Upcoming Events:</div>
-                <div class="stat-value text-warning">31K</div>
+                <div class="stat-value text-warning">{{total_categories}}</div>
                 <div class="stat-desc">Jan 1st - Feb 1st</div>
             </div>
           </div>
@@ -75,19 +57,18 @@
                   </svg>
                 </div>
                 <div class="stat-title text-xl font-bold">Past events:</div>
-                <div class="stat-value text-success">31K</div>
+                <div class="stat-value text-success">{{recent_events}}</div>
                 <div class="stat-desc">Jan 1st - Feb 1st</div>
             </div>
           </div>
       </div>
-    </nav>
-    <main class="pt-8 container mx-auto">
-      {% comment %} Todays Event Lists  {% endcomment %}
+
+    {% comment %} Todays Event Lists  {% endcomment %}
        <div class="overflow-x-auto">
           <table class="table table-auto bg-base-100">
               <!-- head -->
             <caption class="caption-top text-start text-xl font-bold p-4">
-            Today's Events Listing:
+            List of the today's Events:
             </caption>
               <thead>
                 <tr>
@@ -127,7 +108,7 @@
           <table class="table table-auto bg-base-100">
               <!-- head -->
             <caption class="caption-top text-start text-xl font-bold p-4">
-            Total Events:
+            All Events:
             </caption>
               <thead>
                 <tr>
@@ -162,13 +143,5 @@
               </tbody>
             </table>
        </div>
-    </main>
-
-    <footer class="footer footer-center py-8 text-base-content mt-8">
-      <aside>
-        <p>Copyright © 2025 - All right reserved by ACME Industries Ltd</p>
-      </aside>
-    </footer>
-
-    </body>
-</html>
+    
+    {% endblock stats %}
