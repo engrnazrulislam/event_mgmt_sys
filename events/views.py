@@ -8,7 +8,7 @@ from events.models import Event, Participant, Category
 
 def dashboard(request):
     context = {
-        'dashboard_name':"Organizer Dashboard",
+        'dashboard_name':"Dashboard",
         'total_events': Event.objects.count(),
         'total_participants': Participant.objects.count(),
         'total_categories': Category.objects.count(),
