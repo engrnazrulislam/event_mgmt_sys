@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from events.models import Event, Participant, Category
 from datetime import date
-from django.db.models import Count
+from django.db.models import Count, Q
 
 
 # Create your views here.
@@ -45,8 +45,15 @@ def dashboard(request):
     return render(request, 'dashboard.html', context)
 
 def user_dashboard(request):
+
+    base_query = Event.objects.select_related('category').prefetch_related('participants')
+    category_counts = base_query.annotate(total_category=Count('category'))
+    participant_counts = base_query.annotate(total_participants=Count('participants'))
     context={
-        "dashboard_name":"Home"
+        "dashboard_name":"Home",
+        "all_events" : base_query.all(),
+        "category_counts" : category_counts.count(),
+        "participants_counts" : participant_counts.count()
     }
     return render(request,'user_dashboard.html',context)
 
