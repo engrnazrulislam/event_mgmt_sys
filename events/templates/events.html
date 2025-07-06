@@ -1,0 +1,7 @@
+{% extends "base_dashboard.html" %}
+{% block title %}Events{% endblock title %}
+{% block home_btn %}
+    <div class="flex-1">
+          <a href="{% url "user_dashboard" %}"class="btn btn-ghost normal-case text-xl">{{dashboard_name}}</a>
+    </div>
+{% endblock home_btn %}
