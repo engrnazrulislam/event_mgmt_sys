@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{% static "css/output.css" %}">
     <title>{% block title %}{% endblock title %}</title>
   </head>
-  <body class=" bg-base-300 p-8">
+  <body class=" bg-blue-950 p-8">
     <nav class="container mx-auto ">
       {% comment %} Navbar Section {% endcomment %}
       <div class="navbar pt-8">
@@ -15,15 +15,15 @@
         {% block home_btn %}{% endblock home_btn %}
         <div class="flex-none gap-2">
           <div>
-            <a href="{% url "events" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case">Events</a>
-            <a href="{% url "participants" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case">Participants</a>
-            <a href="{% url "categories" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case">Category</a>
+            <a href="{% url "events" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Events</a>
+            <a href="{% url "participants" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Participants</a>
+            <a href="{% url "categories" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Category</a>
           </div>
           <div class="form-control">
             <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto"/>
           </div>
           <div>
-            <button class="btn btn-outline btn-success normal-case">Search</button>
+            <button class="btn btn-outline normal-case text-white">Search</button>
           </div>
         </div>
       </div>
@@ -38,6 +38,9 @@
     {% endblock event_list %}
 
     {% block event_details %}{% endblock event_details %}
+    {% block events %}{% endblock events %}
+    {% block participants %}{% endblock participants %}
+    {% block categories %}{% endblock categories %}
     </main>
 
     {% include "footer.html" %}

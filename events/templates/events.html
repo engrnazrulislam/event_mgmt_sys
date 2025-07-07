@@ -2,6 +2,37 @@
 {% block title %}Events{% endblock title %}
 {% block home_btn %}
     <div class="flex-1">
-          <a href="{% url "user_dashboard" %}"class="btn btn-ghost normal-case text-xl">{{dashboard_name}}</a>
+          <a href="{% url "user_dashboard" %}"class="btn btn-ghost normal-case text-xl text-white">{{dashboard_name}}</a>
     </div>
 {% endblock home_btn %}
+{% block events %}
+<div class="overflow-x-auto bg-white p-4 rounded-xl shadow-xl">
+  <table class="table table-zebra">
+    <caption class="text-center text-xl font-bold p-2">
+      All Event Information:
+    </caption>
+    <thead>
+      <tr>
+        <th></th> 
+        <th class="text-lg font-bold">Name</th> 
+        <th class="text-lg font-bold">Description</th> 
+        <th class="text-lg font-bold">Date</th> 
+        <th class="text-lg font-bold">Time</th> 
+        <th class="text-lg font-bold">Location</th> 
+      </tr>
+    </thead> 
+    <tbody>
+      {% for event in events %}
+      <tr>
+        <th>{{event.id}}</th> 
+        <td>{{event.name}}</td> 
+        <td>{{event.description}}</td> 
+        <td>{{event.date}}</td> 
+        <td>{{event.time}}</td> 
+        <td>{{event.location}}</td> 
+      </tr>
+      {% endfor %}
+    </tbody> 
+  </table>
+</div>
+{% endblock events %}

@@ -6,7 +6,7 @@ urlpatterns = [
 path('admin/', admin.site.urls),
 path('dashboard/',dashboard, name='dashboard'),
 path('user_dashboard/',user_dashboard,name='user_dashboard'),
-path('event_details/',event_details,name='event_details'),
+path('event_details/<int:id>',event_details,name='event_details'),
 path('events/',events,name='events'),
 path('participants/',participants,name='participants'),
 path('categories/',categories,name='categories')

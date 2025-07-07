@@ -15,7 +15,8 @@ class Event(models.Model):
         related_name='events'
     )
     # reverse relation name "participants"
-
+    def __str__(self):
+        return self.name
 # Participant Model
 class Participant(models.Model):
     name = models.CharField(max_length=100)
@@ -33,6 +34,8 @@ class Category(models.Model):
     name = models.CharField(max_length=200,default="General")
     descriptions = models.CharField(max_length=250)
     #reverse relation name "events"
+    def __str__(self):
+        return self.name
 
 
 

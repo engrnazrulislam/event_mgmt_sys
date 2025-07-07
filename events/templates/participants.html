@@ -2,6 +2,31 @@
 {% block title %}Participants{% endblock title %}
 {% block home_btn %}
     <div class="flex-1">
-          <a href="{% url "user_dashboard" %}"class="btn btn-ghost normal-case text-xl">{{dashboard_name}}</a>
+          <a href="{% url "user_dashboard" %}"class="btn btn-ghost normal-case text-xl text-white">{{dashboard_name}}</a>
     </div>
 {% endblock home_btn %}
+{% block participants %}
+<div class="overflow-x-auto bg-white p-4 rounded-xl shadow-xl">
+  <table class="table table-zebra">
+    <caption class="text-center text-xl font-bold p-2">
+      All Participants Information:
+    </caption>
+    <thead>
+      <tr>
+        <th></th> 
+        <th class="text-lg font-bold">Name</th> 
+        <th class="text-lg font-bold">Email</th> 
+      </tr>
+    </thead> 
+    <tbody>
+      {% for participant in participants %}
+      <tr>
+        <th>{{participant.id}}</th> 
+        <td>{{participant.name}}</td> 
+        <td>{{participant.email}}</td> 
+      </tr>
+      {% endfor %}
+    </tbody> 
+  </table>
+</div>
+{% endblock participants %}
