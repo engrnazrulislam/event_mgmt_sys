@@ -5,7 +5,7 @@
     </div>
 {% endblock home_btn %}
 {% block eventForms %}
-    <div class="mx-auto w-6/12 mt-8 border-2 rounded-xl shadow-xl p-12">
+    <div class="mx-auto w-9/12 mt-8 border-2 rounded-xl shadow-xl p-12">
         <div>
         {% if messages %}
             {% for message in messages %}
@@ -16,9 +16,10 @@
             
         {% endif %}
         <form method="POST">
-            {% comment %} {% csrf_token %}
+            {% comment %} 
             {{ event_form}}
             <br/> {% endcomment %}
+            {% csrf_token %}
             {% for field in event_form %}
             <div class="mb-4 w-full">
                 <label class="{{ event_form.label_class }}" for="{{ field.id_for_label }}">
