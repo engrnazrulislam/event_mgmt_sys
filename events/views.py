@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from events.models import Event, Participant, Category
 from datetime import date
 from django.db.models import Count, Q
+from events.forms import EventModelForm
+from django.contrib import messages
 
 
 # Create your views here.
@@ -83,3 +85,44 @@ def categories(request):
         "categories": all_categories
     }
     return render(request,'categories.html',context)
+
+def create_event(request):
+    events=Event.objects.all()
+    event_form = EventModelForm() # For GET
+    # task_detail_form = TaskDetailModelForm() # GET operation
+
+    if request.method == 'POST':
+        # form = TaskForm(request.POST, employees=employees) # For Django Basic Form POST
+        event_form = EventModelForm(request.POST) # For Django Model Form
+        # task_detail_form = TaskDetailModelForm(request.POST)
+        if event_form.is_valid():
+            """ For Django Model Form """
+            event = event_form.save()
+            # task_detail = task_detail_form.save(commit=False)
+            # task_detail.task = task
+            # task_detail.save()
+            messages.success(request,'Event Created Successfully')
+            return redirect('create-event')
+            # return render(request, 'test_form.html', {"task_form":task_form,"task_detail_form":task_detail_form,"message":"Data is successfully added"})
+            """ For Django Basic Form  Data"""
+            # data = form.cleaned_data
+            # title = data.get('title')
+            # description = data.get('description')
+            # due_date = data.get('due_date')
+            # assigned_to = data.get('assigned_to')
+
+            # task=Task.objects.create(title=title, description=description, due_date=due_date)
+
+            # # Assign employee to task
+            # for emp_id in assigned_to:
+            #     employee = Employee.objects.get(id=emp_id)
+            #     task.assigned_to.add(employee)
+            
+            # return HttpResponse('Task Added Successfully')
+
+    context={
+        "dashboard_name": 'Home',
+        "event_form": event_form,
+        # "task_detail_form": task_detail_form
+    }
+    return render(request,'form.html',context)

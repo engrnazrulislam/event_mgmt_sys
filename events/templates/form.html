@@ -1,0 +1,37 @@
+{% extends "base_dashboard.html" %}
+{% block home_btn %}
+    <div class="flex-1">
+          <a href="{% url "user_dashboard" %}"class="btn btn-ghost normal-case text-xl text-white">{{dashboard_name}}</a>
+    </div>
+{% endblock home_btn %}
+{% block eventForms %}
+    <div class="mx-auto w-6/12 mt-8 border-2 rounded-xl shadow-xl p-12">
+        <div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="px-2 py-1 {% if message.tags == 'success' %} bg-green-600 {% endif %}"> 
+                    {{message}} 
+                </div>
+            {% endfor %}
+            
+        {% endif %}
+        <form method="POST">
+            {% comment %} {% csrf_token %}
+            {{ event_form}}
+            <br/> {% endcomment %}
+            {% for field in event_form %}
+            <div class="mb-4 w-full">
+                <label class="{{ event_form.label_class }}" for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+                {{ field }}
+                {% if field.errors %}
+                    <p class="text-red-600 text-sm">{{ field.errors }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="border-purple-200  hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700 w-full border-2 rounded-lg shadow-xl p-2">Submit</button>
+        </form>
+        </div>
+    </div>
+{% endblock eventForms %}
