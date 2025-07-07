@@ -7,6 +7,9 @@
 {% endblock home_btn %}
 {% block events %}
 <div class="overflow-x-auto bg-white p-4 rounded-xl shadow-xl">
+  <div class="flex justify-end items-center">
+    <a href="{% url "create_event" %}" class="btn btn-outline btn-info font-semibold text-lg">Create New Event</a>
+  </div>
   <table class="table table-zebra">
     <caption class="text-center text-xl font-bold p-2">
       All Event Information:
@@ -18,7 +21,9 @@
         <th class="text-lg font-bold">Description</th> 
         <th class="text-lg font-bold">Date</th> 
         <th class="text-lg font-bold">Time</th> 
-        <th class="text-lg font-bold">Location</th> 
+        <th class="text-lg font-bold">Location</th>
+        <th class="text-lg font-bold"></th> 
+        <th class="text-lg font-bold"></th>
       </tr>
     </thead> 
     <tbody>
@@ -29,7 +34,14 @@
         <td>{{event.description}}</td> 
         <td>{{event.date}}</td> 
         <td>{{event.time}}</td> 
-        <td>{{event.location}}</td> 
+        <td>{{event.location}}</td>
+        <td><a href="{% url "update_event" event.id %}" role="button" class="btn btn-ghost">Edit</a></td>
+        <td>
+          <form method="POST" action="{% url 'delete_event' event.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-ghost">Delete</button>
+          </form>
+        </td>
       </tr>
       {% endfor %}
     </tbody> 

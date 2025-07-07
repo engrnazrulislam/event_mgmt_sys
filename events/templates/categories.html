@@ -7,6 +7,9 @@
 {% endblock home_btn %}
 {% block categories %}
 <div class="overflow-x-auto bg-white p-4 rounded-xl shadow-xl">
+  <div class="flex justify-end items-center">
+    <a href="{% url "create_category" %}" class="btn btn-outline btn-info font-semibold text-lg">Create New Category</a>
+  </div>
   <table class="table table-zebra">
     <caption class="text-center text-xl font-bold p-2">
       All Categories Information:
@@ -16,6 +19,8 @@
         <th></th> 
         <th class="text-lg font-bold">Name</th> 
         <th class="text-lg font-bold">Description</th> 
+        <th class="text-lg font-bold"></th> 
+        <th class="text-lg font-bold"></th> 
       </tr>
     </thead> 
     <tbody>
@@ -24,6 +29,13 @@
         <th>{{category.id}}</th> 
         <td>{{category.name}}</td> 
         <td>{{category.descriptions}}</td> 
+        <td><a href="{% url "update_category" category.id %}" role="button" class="btn btn-ghost">Edit</a></td>
+        <td>
+            <form method="POST" action="{% url 'delete_category' category.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-ghost">Delete</button>
+            </form>
+        </td>
       </tr>
       {% endfor %}
     </tbody> 

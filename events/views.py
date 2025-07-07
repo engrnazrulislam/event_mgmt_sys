@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from events.models import Event, Participant, Category
 from datetime import date
 from django.db.models import Count, Q
-from events.forms import EventModelForm
+from events.forms import EventModelForm, ParticipantSelectionForm, ParticipantModelForm, CategoryModelForm
 from django.contrib import messages
 
 
@@ -87,18 +87,148 @@ def categories(request):
     return render(request,'categories.html',context)
 
 def create_event(request):
-    events=Event.objects.all()
     event_form = EventModelForm() # For GET
+    selection_form = ParticipantSelectionForm()
 
     if request.method == 'POST':
         event_form = EventModelForm(request.POST) # For Django Model Form
-        if event_form.is_valid():
+        selection_form = ParticipantSelectionForm(request.POST)
+        if event_form.is_valid() and selection_form.is_valid():
             """ For Django Model Form """
-            event_form.save()
+            event = event_form.save()
+            selected_participants = selection_form.cleaned_data['participants']
+            for participant in selected_participants:
+                participant.participant_to.add(event)
+
             messages.success(request,'Event Created Successfully')
-            return redirect('create-event')
+            return redirect('create_event')
     context={
         "dashboard_name": 'Home',
         "event_form": event_form,
+        "selection_form": selection_form
     }
     return render(request,'form.html',context)
+
+def create_participant(request):
+    participant_form = ParticipantModelForm() # For GET
+
+    if request.method == 'POST':
+        participant_form = ParticipantModelForm(request.POST) # For Django Model Form
+        if participant_form.is_valid():
+            """ For Django Model Form """
+            participant_form.save()
+            
+            messages.success(request,'Participant Created Successfully')
+            return redirect('create_participant')
+    context={
+        "dashboard_name": 'Home',
+        "participant_form": participant_form
+    }
+    return render(request,'participant_form.html',context)
+
+def create_category(request):
+    category_form = CategoryModelForm() # For GET
+
+    if request.method == 'POST':
+        category_form = CategoryModelForm(request.POST) # For Django Model Form
+        if category_form.is_valid():
+            """ For Django Model Form """
+            category_form.save()
+            
+            messages.success(request,'Category Created Successfully')
+            return redirect('create_category')
+    context={
+        "dashboard_name": 'Home',
+        "category_form": category_form
+    }
+    return render(request,'category_form.html',context)
+
+def update_event(request, id):
+    events = Event.objects.get(id=id)
+    event_form = EventModelForm(instance = events) 
+    
+    selected_participants = events.participants.all()
+
+    if request.method == 'POST':
+        event_form = EventModelForm(instance = events) 
+        selection_form = ParticipantSelectionForm(request.POST)
+        if event_form.is_valid() and selection_form.is_valid():
+            """ For Django Model Form """
+            event = event_form.save()
+            participants = selection_form.cleaned_data['participants']
+            event.participants.set(participants)
+            event.save()
+
+            messages.success(request,'Event Updated Successfully')
+            return redirect('update_event',id)
+    else:
+        event_form = EventModelForm(instance=events)
+        selection_form = ParticipantSelectionForm(
+            initial={'participants': selected_participants}
+        )
+    context={
+        "dashboard_name": 'Home',
+        "event_form": event_form,
+        "selection_form": selection_form
+    }
+    return render(request,'form.html',context)
+
+def update_participant(request, id):
+    participants = Participant.objects.get(id=id)
+    participant_form = ParticipantModelForm(instance = participants) # For GET
+
+    if request.method == 'POST':
+        participant_form = ParticipantModelForm(request.POST, instance = participants) # For Django Model Form
+        if participant_form.is_valid():
+            """ For Django Model Form """
+            participant_form.save()
+            
+            messages.success(request,'Participant Updated Successfully')
+            return redirect('update_participant',id)
+    context={
+        "dashboard_name": 'Home',
+        "participant_form": participant_form
+    }
+    return render(request,'participant_form.html',context)
+
+def update_category(request, id):
+    categories = Category.objects.get(id=id)
+    category_form = CategoryModelForm(instance = categories) # For GET
+
+    if request.method == 'POST':
+        category_form = CategoryModelForm(request.POST, instance = categories) # For Django Model Form
+        if category_form.is_valid():
+            """ For Django Model Form """
+            category_form.save()
+            
+            messages.success(request,'Category Updated Successfully')
+            return redirect('create_category', id)
+    context={
+        "dashboard_name": 'Home',
+        "category_form": category_form
+    }
+    return render(request,'category_form.html',context)
+
+def delete_event(request, id):
+    if request.method == "POST":
+        event = Event.objects.get(id=id)
+        event.delete()
+        messages.success(request,"Event is deleted successfully")
+        
+    return redirect('events')
+    
+def delete_participant(request, id):
+    if request.method == "POST":
+        participant = Participant.objects.get(id=id)
+        participant.delete()
+        messages.success(request,"Participant is deleted successfully")
+        
+    return redirect('participants')
+
+def delete_category(request, id):
+    if request.method == "POST":
+        category = Category.objects.get(id=id)
+        category.delete()
+        messages.success(request,"Category is deleted successfully")
+        
+    return redirect('categories')

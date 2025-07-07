@@ -7,6 +7,9 @@
 {% endblock home_btn %}
 {% block participants %}
 <div class="overflow-x-auto bg-white p-4 rounded-xl shadow-xl">
+  <div class="flex justify-end items-center">
+    <a href="{% url "create_participant" %}" class="btn btn-outline btn-info font-semibold text-lg">Create New Participant</a>
+  </div>
   <table class="table table-zebra">
     <caption class="text-center text-xl font-bold p-2">
       All Participants Information:
@@ -15,7 +18,9 @@
       <tr>
         <th></th> 
         <th class="text-lg font-bold">Name</th> 
-        <th class="text-lg font-bold">Email</th> 
+        <th class="text-lg font-bold">Email</th>
+        <th class="text-lg font-bold"></th> 
+        <th class="text-lg font-bold"></th>
       </tr>
     </thead> 
     <tbody>
@@ -24,6 +29,13 @@
         <th>{{participant.id}}</th> 
         <td>{{participant.name}}</td> 
         <td>{{participant.email}}</td> 
+        <td><a href="{% url "update_participant" participant.id %}" role="button" class="btn btn-ghost">Edit</a></td>
+        <td>
+          <form method="POST" action="{% url 'delete_participant' participant.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-ghost">Delete</button>
+          </form>
+        </td> 
       </tr>
       {% endfor %}
     </tbody> 
