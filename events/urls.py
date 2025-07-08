@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.urls import path
-from events.views import dashboard, user_dashboard, event_details, events,participants,categories, create_event, create_participant, create_category,update_event,delete_event,update_participant, delete_participant, update_category, delete_category
+from events.views import dashboard, user_dashboard, event_details, events,participants,categories, create_event, create_participant, create_category,update_event,delete_event,update_participant, delete_participant, update_category, delete_category, search_result
 
 urlpatterns = [
 path('admin/', admin.site.urls),
 path('dashboard/',dashboard, name='dashboard'),
-path('user_dashboard/',user_dashboard,name='user_dashboard'),
+# path('user_dashboard/',user_dashboard,name='user_dashboard'),
 path('event_details/<int:id>',event_details,name='event_details'),
 path('events/',events,name='events'),
 path('participants/',participants,name='participants'),
@@ -19,4 +19,5 @@ path('update_category/<int:id>',update_category,name='update_category'),
 path('delete_category/<int:id>',delete_category,name='delete_category'),
 path('create_participant/',create_participant,name='create_participant'),
 path('create_category/',create_category,name='create_category'),
+path('search_result/',search_result,name='search_result'),
 ]

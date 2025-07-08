@@ -1,0 +1,26 @@
+{% extends "base_dashboard.html" %}
+{% block home_btn %}
+    <div class="flex-1">
+          <a href="{% url "user_dashboard" %}"class="btn btn-ghost normal-case text-xl text-white">{{dashboard_name}}</a>
+    </div>
+{% endblock home_btn %}
+
+{% block search_result %}
+{% if query %}
+  <p class="text-white text-xl text-center">Showing results for: "<strong>{{ query }}</strong>"</p>
+{% endif %}
+<div class="border-2 shadow-2xl p-4 rounded-2xl mt-8 w-auto">
+<ul class="text-white text-xl">
+  {% for event in results %}
+    <li>
+      <strong>Event Name: {{ event.name }}</strong><br>
+      Description: {{ event.description }}<br>
+      Date: {{ event.date }} <br>
+      Location: {{ event.location }}
+    </li>
+  {% empty %}
+    <li>No events found.</li>
+  {% endfor %}
+</ul>
+</div>
+{% endblock search_result %}
