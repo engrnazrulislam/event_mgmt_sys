@@ -19,12 +19,16 @@
             <a href="{% url "participants" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Participants</a>
             <a href="{% url "categories" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Category</a>
           </div>
+          <form method="GET" action="{% url "search_result" %}">
+          <div class="flex justify-between items-center gap-2">
           <div class="form-control">
-            <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto"/>
+            <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" name='q' value="{{query}}"/>
           </div>
           <div>
             <button class="btn btn-outline normal-case text-white">Search</button>
           </div>
+          </div>
+        </form>
         </div>
       </div>
     </nav>
@@ -44,6 +48,7 @@
     {% block eventForms %}{% endblock eventForms %}
     {% block participantForms %}{% endblock participantForms %}
     {% block categoryForms %}{% endblock categoryForms %}
+    {% block search_result %}{% endblock search_result %}
     </main>
 
     {% include "footer.html" %}

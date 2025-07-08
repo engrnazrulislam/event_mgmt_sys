@@ -145,12 +145,10 @@ def create_category(request):
 
 def update_event(request, id):
     events = Event.objects.get(id=id)
-    event_form = EventModelForm(instance = events) 
-    
     selected_participants = events.participants.all()
 
     if request.method == 'POST':
-        event_form = EventModelForm(instance = events) 
+        event_form = EventModelForm(request.POST, instance = events) 
         selection_form = ParticipantSelectionForm(request.POST)
         if event_form.is_valid() and selection_form.is_valid():
             """ For Django Model Form """
@@ -202,7 +200,7 @@ def update_category(request, id):
             category_form.save()
             
             messages.success(request,'Category Updated Successfully')
-            return redirect('create_category', id=id)
+            return redirect('update_category', id=id)
     context={
         "dashboard_name": 'Home',
         "category_form": category_form
@@ -232,3 +230,20 @@ def delete_category(request, id):
         messages.success(request,"Category is deleted successfully")
         
     return redirect('categories')
+
+def search_result(request):
+    query = request.GET.get('q')
+    results = []
+
+    if query:
+        results = Event.objects.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(location__icontains=query)
+        )
+
+    return render(request, 'search_result.html', {
+        'dashboard_name': 'Home',
+        'results': results,
+        'query': query,
+    })
