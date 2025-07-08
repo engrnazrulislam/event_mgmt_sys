@@ -17,6 +17,7 @@
     <!-- head -->
     <thead>
       <tr>
+        <th class="text-xl"></th>
         <th class="text-xl">Event Name:</th>
         <th class="text-xl">Category:</th>
         <th class="text-xl">Participants:</th>
@@ -27,6 +28,7 @@
       <!-- row 1 -->
        {% for event in all_events %}
       <tr>
+        <td>{{forloop.counter}}</td>
         <td>
           <div class="flex items-center space-x-3">
             <div>

@@ -27,7 +27,7 @@
                 <!-- head -->
                 <thead>
                 <tr>
-                    <th>ID</th>
+                    <th></th>
                     <th>Name</th>
                     <th>Email</th>
                 </tr>
@@ -36,7 +36,7 @@
                 <!-- row 1 -->
                  {% for participant in event_details.participants.all %}
                 <tr>
-                    <th>{{participant.id}}</th>
+                    <th>{{forloop.counter}}</th>
                     <td>{{participant.name}}</td>
                     <td>{{participant.email}}</td>
                 </tr>

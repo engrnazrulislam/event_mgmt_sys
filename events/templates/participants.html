@@ -26,7 +26,7 @@
     <tbody>
       {% for participant in participants %}
       <tr>
-        <th>{{participant.id}}</th> 
+        <th>{{forloop.counter}}</th> 
         <td>{{participant.name}}</td> 
         <td>{{participant.email}}</td> 
         <td><a href="{% url "update_participant" participant.id %}" role="button" class="btn btn-ghost">Edit</a></td>

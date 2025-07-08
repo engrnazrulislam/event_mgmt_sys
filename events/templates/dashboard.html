@@ -91,7 +91,7 @@
                 {% for event in data %}
                   {% if event.date == today_date %}
                       <tr class="hover">
-                        <th>{{event.id}}</th>
+                        <th>{{forloop.counter}}</th>
                         <td>{{event.name}}</td>
                         <td>{{event.description}}</td>
                         <td>{{event.location}}</td>
@@ -129,7 +129,7 @@
                 <!-- row 1 -->
                  {% for event in events_data.e_data %}
                 <tr class="hover">
-                  <th>{{event.id}}</th>
+                  <th>{{forloop.counter}}</th>
                   <td>{{event.name}}</td>
                   <td>{{event.description}}</td>
                   <td>{{event.location}}</td>

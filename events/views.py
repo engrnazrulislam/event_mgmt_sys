@@ -160,7 +160,7 @@ def update_event(request, id):
             event.save()
 
             messages.success(request,'Event Updated Successfully')
-            return redirect('update_event',id)
+            return redirect('update_event',id=id)
     else:
         event_form = EventModelForm(instance=events)
         selection_form = ParticipantSelectionForm(
@@ -184,7 +184,7 @@ def update_participant(request, id):
             participant_form.save()
             
             messages.success(request,'Participant Updated Successfully')
-            return redirect('update_participant',id)
+            return redirect('update_participant',id=id)
     context={
         "dashboard_name": 'Home',
         "participant_form": participant_form
@@ -202,7 +202,7 @@ def update_category(request, id):
             category_form.save()
             
             messages.success(request,'Category Updated Successfully')
-            return redirect('create_category', id)
+            return redirect('create_category', id=id)
     context={
         "dashboard_name": 'Home',
         "category_form": category_form

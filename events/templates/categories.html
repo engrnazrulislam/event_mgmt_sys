@@ -26,7 +26,7 @@
     <tbody>
       {% for category in categories %}
       <tr>
-        <th>{{category.id}}</th> 
+        <th>{{forloop.counter}}</th> 
         <td>{{category.name}}</td> 
         <td>{{category.descriptions}}</td> 
         <td><a href="{% url "update_category" category.id %}" role="button" class="btn btn-ghost">Edit</a></td>

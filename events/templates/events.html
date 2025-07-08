@@ -29,7 +29,7 @@
     <tbody>
       {% for event in events %}
       <tr>
-        <th>{{event.id}}</th> 
+        <th>{{forloop.counter}}</th> 
         <td>{{event.name}}</td> 
         <td>{{event.description}}</td> 
         <td>{{event.date}}</td> 
