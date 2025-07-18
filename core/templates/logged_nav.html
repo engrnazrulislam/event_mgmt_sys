@@ -1,20 +1,12 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static "css/output.css" %}">
-    <title>{% block title %}{% endblock title %}</title>
-  </head>
-  <body class=" bg-blue-950 p-8">
-    <nav class="container mx-auto ">
+<nav class="container mx-auto ">
       {% comment %} Navbar Section {% endcomment %}
       <div class="navbar pt-8">
         {% block dashboard_btn %}{% endblock dashboard_btn %}
         {% block home_btn %}{% endblock home_btn %}
         <div class="flex-none gap-2">
           <div>
+            <a href="{% url "home" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Home</a>
+            <a href="{% url "dashboard" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Dashboard</a>
             <a href="{% url "events" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Events</a>
             <a href="{% url "participants" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Participants</a>
             <a href="{% url "categories" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Category</a>
@@ -26,20 +18,13 @@
           </div>
           <div>
             <button class="btn btn-outline normal-case text-white">Search</button>
+            <form action="{% url "sign_out" %}"method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline normal-case text-white">Logout</button>
+            </form>
           </div>
           </div>
         </form>
         </div>
       </div>
     </nav>
-    <main class="pt-8 container mx-auto max-w-10/12">
-    
-    {% block content %} 
-    {% endblock content %}
-    
-    </main>
-    <footer>
-      {% include "footer.html" %}
-    </footer>    
-    </body>
-</html>

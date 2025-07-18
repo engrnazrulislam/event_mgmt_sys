@@ -5,7 +5,7 @@ from events.views import dashboard, user_dashboard, event_details, events,partic
 urlpatterns = [
 path('admin/', admin.site.urls),
 path('dashboard/',dashboard, name='dashboard'),
-# path('user_dashboard/',user_dashboard,name='user_dashboard'),
+path('user_dashboard/',user_dashboard,name='user_dashboard'),
 path('event_details/<int:id>',event_details,name='event_details'),
 path('events/',events,name='events'),
 path('participants/',participants,name='participants'),
