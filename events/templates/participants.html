@@ -5,7 +5,7 @@
           <a href="{% url "user_dashboard" %}"class="btn btn-ghost normal-case text-xl text-white">{{dashboard_name}}</a>
     </div>
 {% endblock home_btn %}
-{% block participants %}
+{% block content %}
 <div class="overflow-x-auto bg-white p-4 rounded-xl shadow-xl">
   <div class="flex justify-end items-center">
     <a href="{% url "create_participant" %}" class="btn btn-outline btn-info font-semibold text-lg">Create New Participant</a>
@@ -41,4 +41,4 @@
     </tbody> 
   </table>
 </div>
-{% endblock participants %}
+{% endblock content %}

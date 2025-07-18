@@ -5,7 +5,7 @@
     </div>
 {% endblock home_btn %}
 
-{% block search_result %}
+{% block content %}
 {% if query %}
   <p class="text-white text-xl text-center">Showing results for: "<strong>{{ query }}</strong>"</p>
 {% endif %}
@@ -23,4 +23,4 @@
   {% endfor %}
 </ul>
 </div>
-{% endblock search_result %}
+{% endblock content %}
