@@ -1,23 +1,17 @@
-<nav class="container mx-auto ">
-      {% comment %} Navbar Section {% endcomment %}
-      <div class="navbar pt-8">
-        {% block dashboard_btn %}{% endblock dashboard_btn %}
-        {% block home_btn %}{% endblock home_btn %}
-        <div class="flex-none gap-2">
-          <div>
-            <a href="{% url "home" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Home</a>
-            <a href="{% url "dashboard" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Dashboard</a>
-          </div>
-          <form method="GET" action="{% url "search_result" %}">
-          <div class="flex justify-between items-center gap-2">
-          <div class="form-control">
-            <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" name='q' value="{{query}}"/>
-          </div>
-          <div>
-            <button class="btn btn-outline normal-case text-white">Search</button>
-          </div>
-          </div>
-        </form>
-        </div>
-      </div>
-    </nav>
+<div class="navbar my-8 w-11/12 mx-auto">
+    <div class="navbar-start">
+        <a href="{% url "home" %}" role="button" class="btn btn-ghost normal-case text-white text-xl">Home</a>
+    </div>
+    <div class="navbar-end">
+      <a href="{% url "events_overview" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Events Overview</a>
+      <a href="{% url "events_list" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">All Events</a>
+      <form action="{% url "sign_in" %}"method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-ghost normal-case text-white text-xl">Sign-in</button>
+      </form>
+      <form action="{% url "sign_up" %}"method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-ghost normal-case text-white text-xl">Sign-up</button>
+      </form>
+    </div>
+</div>

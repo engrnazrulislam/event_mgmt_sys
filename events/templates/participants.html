@@ -1,11 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Participants{% endblock title %}
-{% block home_btn %}
-    <div class="flex-1">
-          <a href="{% url "user_dashboard" %}"class="btn btn-ghost normal-case text-xl text-white">{{dashboard_name}}</a>
-    </div>
-{% endblock home_btn %}
 {% block content %}
+<div class="w-11/12 mx-auto">
 <div class="overflow-x-auto bg-white p-4 rounded-xl shadow-xl">
   <div class="flex justify-end items-center">
     <a href="{% url "create_participant" %}" class="btn btn-outline btn-info font-semibold text-lg">Create New Participant</a>
@@ -40,5 +36,6 @@
       {% endfor %}
     </tbody> 
   </table>
+</div>
 </div>
 {% endblock content %}

@@ -7,11 +7,16 @@
     <link rel="stylesheet" href="{% static "css/output.css" %}">
     <title>{% block title %}{% endblock title %}</title>
   </head>
-  <body class=" bg-blue-950 p-8">
+  <body class=" bg-blue-950">
     <header>
-      {% include "logged_nav.html" %}
+        {% if request.user.is_authenticated %}
+            {% include "logged_nav.html" %}
+        {% else %}
+            {% include "non_logged_nav.html" %}
+        {% endif %}
+    
     </header>
-    <main class="pt-8 container mx-auto max-w-10/12">
+    <main class="py-8 container mx-auto max-w-10/12">
     
     {% block content %} 
     {% endblock content %}

@@ -1,11 +1,8 @@
 {% extends "base.html" %}
-{% block home_btn %}
-    <div class="flex-1">
-          <a href="{% url "user_dashboard" %}"class="btn btn-ghost normal-case text-xl text-white">{{dashboard_name}}</a>
-    </div>
-{% endblock home_btn %}
+{% block title %}Participant Form{% endblock title %}
 {% block content %}
-    <div class="mx-auto w-9/12 mt-8 border-2 rounded-xl shadow-xl bg-white p-12">
+<div class="w-11/12 mx-auto">
+    <div class="mx-auto w-10/12 mt-8 border-2 rounded-xl shadow-xl bg-white p-12">
         <div>
         {% if messages %}
             {% for message in messages %}
@@ -22,4 +19,5 @@
         </form>
         </div>
     </div>
+</div>
 {% endblock content %}

@@ -11,7 +11,7 @@ from django.contrib import messages
 # def dashboard(request):
 #     return render(request,'dashboard.html')
 
-def dashboard(request):
+def events_overview(request):
     type=request.GET.get('type','all')
     base_query = Event.objects
     if type=='total_events':
@@ -44,20 +44,19 @@ def dashboard(request):
             "d_type": type
             },
     }
-    return render(request, 'dashboard.html', context)
+    return render(request, 'events_overview.html', context)
 
-def user_dashboard(request):
+def events_list(request):
     events = Event.objects.select_related('category').annotate(total_participants=Count('participants', distinct=True))
     context={
         "dashboard_name":"Home",
         "all_events" : events
     }
-    return render(request,'user_dashboard.html',context)
+    return render(request,'events_list.html',context)
 
 def event_details(request,id):
     events = Event.objects.prefetch_related('participants').select_related('category').get(id=id)
     context={
-        "dashboard_name":"User Dashboard",
         "event_details": events,
     }
     return render(request,'event_details.html',context)
@@ -65,7 +64,6 @@ def event_details(request,id):
 def events(request):
     all_events = Event.objects.all()
     context={
-        "dashboard_name": "Home",
         "events":all_events
     }
     return render(request,'events.html',context)
@@ -73,7 +71,6 @@ def events(request):
 def participants(request):
     all_participants = Participant.objects.all()
     context={
-        "dashboard_name": "Home",
         "participants": all_participants
     }
     return render(request,'participants.html',context)
@@ -81,7 +78,6 @@ def participants(request):
 def categories(request):
     all_categories = Category.objects.all()
     context={
-        "dashboard_name": "Home",
         "categories": all_categories
     }
     return render(request,'categories.html',context)
@@ -103,7 +99,6 @@ def create_event(request):
             messages.success(request,'Event Created Successfully')
             return redirect('create_event')
     context={
-        "dashboard_name": 'Home',
         "event_form": event_form,
         "selection_form": selection_form
     }
@@ -121,7 +116,6 @@ def create_participant(request):
             messages.success(request,'Participant Created Successfully')
             return redirect('create_participant')
     context={
-        "dashboard_name": 'Home',
         "participant_form": participant_form
     }
     return render(request,'participant_form.html',context)
@@ -138,7 +132,6 @@ def create_category(request):
             messages.success(request,'Category Created Successfully')
             return redirect('create_category')
     context={
-        "dashboard_name": 'Home',
         "category_form": category_form
     }
     return render(request,'category_form.html',context)
@@ -165,7 +158,6 @@ def update_event(request, id):
             initial={'participants': selected_participants}
         )
     context={
-        "dashboard_name": 'Home',
         "event_form": event_form,
         "selection_form": selection_form
     }
@@ -184,7 +176,6 @@ def update_participant(request, id):
             messages.success(request,'Participant Updated Successfully')
             return redirect('update_participant',id=id)
     context={
-        "dashboard_name": 'Home',
         "participant_form": participant_form
     }
     return render(request,'participant_form.html',context)
@@ -202,7 +193,6 @@ def update_category(request, id):
             messages.success(request,'Category Updated Successfully')
             return redirect('update_category', id=id)
     context={
-        "dashboard_name": 'Home',
         "category_form": category_form
     }
     return render(request,'category_form.html',context)
@@ -243,7 +233,6 @@ def search_result(request):
         )
 
     return render(request, 'search_result.html', {
-        'dashboard_name': 'Home',
         'results': results,
         'query': query,
     })

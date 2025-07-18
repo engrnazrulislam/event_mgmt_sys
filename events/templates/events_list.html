@@ -1,18 +1,7 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}User Dashboard{% endblock title %}
-{% block home_btn %}
-    <div class="flex-1">
-          <a href="{% url "dashboard" %}"class="btn btn-ghost normal-case text-xl text-white">Dashboard</a>
-    </div>
-    <div class="flex-none">
-          <a href="{% url "user_dashboard" %}"class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">{{dashboard_name}}</a>
-    </div>
-{% endblock home_btn %}
+{% block title %}Events List{% endblock title %}
 {% block content %}
-<div class="w-full text-white text-3xl font-bold text-center">
-Welcome to Event Management Systems
-</div>
+<div class="w-11/12 mx-auto">
 <div class="overflow-x-auto">
   <table class="table bg-white">
     <caption class="text-xl font-bold text-white text-center shadow-md p-4">
@@ -55,5 +44,6 @@ Welcome to Event Management Systems
     </tbody>
     
   </table>
+</div>
 </div>
 {% endblock content %}

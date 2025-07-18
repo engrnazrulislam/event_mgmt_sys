@@ -1,11 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Event Details{% endblock title %}
-{% block home_btn %}
-    <div class="flex-1">
-          <a href="{% url "user_dashboard" %}"class="btn btn-ghost normal-case text-xl text-white">{{dashboard_name}}</a>
-    </div>
-{% endblock home_btn %}
-
 {% block content %}
 <div class="flex justify-between items-top gap-4">
 {% comment %} Event Detail Section {% endcomment %}

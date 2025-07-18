@@ -1,20 +1,13 @@
 {% extends "base.html" %}
-{% block title %}Dashboard{% endblock title %}
-    {% block dashboard_btn %}
-        <div class="flex-1">
-          <a href="{% url "dashboard" %}"class="btn btn-ghost normal-case text-xl text-white">{{dashboard_name}}</a>
-        </div>
-        <div class="flex-none">
-          <a href="{% url "user_dashboard" %}"class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Home</a>
-        </div>
-    {% endblock dashboard_btn %}
+{% block title %}Events Overview{% endblock title %}
     {% block content %}
     
     {% comment %} Grid Stats Section {% endcomment %}
+  <div class="w-11/12 mx-auto">
       <div class="grid grid-cols-1 grid-flow-row lg:grid-cols-4 lg:grid-flow-col gap-4 ">
           
-          <a href="{% url "dashboard" %}" role="button">
-          <div class="stats shadow p-4 w-full">
+          <a href="{% url "events_overview" %}" role="button">
+          <div class="stats shadow p-2 w-full">
               <div class="stat">
                 <div class="stat-figure text-primary">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
@@ -27,8 +20,8 @@
           </div>
           </a>
 
-          <a href="{% url "dashboard" %}?type=total_events" role="button">
-          <div class="stats shadow p-4 w-full">
+          <a href="{% url "events_overview" %}?type=total_events" role="button">
+          <div class="stats shadow p-2 w-full">
               <div class="stat">
                 <div class="stat-figure text-secondary">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -41,8 +34,8 @@
           </div>
           </a>
           
-          <a href="{% url "dashboard" %}?type=upcoming_events"role="button">
-          <div class="stats shadow p-4 w-full">
+          <a href="{% url "events_overview" %}?type=upcoming_events"role="button">
+          <div class="stats shadow p-2 w-full">
               <div class="stat">
                 <div class="stat-figure text-warning">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -55,8 +48,8 @@
           </div>
           </a>
 
-          <a href="{% url "dashboard" %}?type=past_events"role="button">
-          <div class="stats shadow p-4 w-full">
+          <a href="{% url "events_overview" %}?type=past_events"role="button">
+          <div class="stats shadow p-2 w-full">
               <div class="stat">
                 <div class="stat-figure text-success">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -138,5 +131,5 @@
               </tbody>
             </table>
        </div>
-    
+    </div>
     {% endblock content %}
