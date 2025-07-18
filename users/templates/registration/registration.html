@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Authentication</title>
-</head>
-<body>
-    <h1>Welcome to Users Authentication System</h1>
-    <div>
+{% extends "base.html" %}
+{% block title %}Registration{% endblock title %}
+{% block content %}
+<div class="w-11/12 mx-auto">
         {% if form.non_field_errors %}
             {% for error in form.non_field_errors %}
                 {{error}}
@@ -17,8 +11,6 @@
             {% csrf_token %}
             {% for field in form %}         
             <p>
-                {% comment %} {{field}} for one line display {% endcomment %}
-                 {% comment %} If we want block display we use {% endcomment %}
                 <label for="{{field.id_for_label}}">{{field.label}}</label>
                 {{field}}
                 {% if field.errors %}
@@ -32,6 +24,5 @@
             {% endfor %}
             <button type = "submit">Sign-up</button>
         </form>
-    </div>
-</body>
-</html>
+</div>
+{% endblock content %}
