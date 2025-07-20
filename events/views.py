@@ -11,7 +11,7 @@ from django.contrib import messages
 # def dashboard(request):
 #     return render(request,'dashboard.html')
 
-def events_overview(request):
+def events_dashboard(request):
     type=request.GET.get('type','all')
     base_query = Event.objects
     if type=='total_events':
@@ -44,7 +44,7 @@ def events_overview(request):
             "d_type": type
             },
     }
-    return render(request, 'events_overview.html', context)
+    return render(request, 'events_dashboard.html', context)
 
 def events_list(request):
     events = Event.objects.select_related('category').annotate(total_participants=Count('participants', distinct=True))

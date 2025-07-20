@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="{% static "css/output.css" %}">
     <title>{% block title %}{% endblock title %}</title>
   </head>
-  <body class=" bg-blue-950">
-    <header>
+  <body class="bg-gray-200">
+    <header class="py-4 bg-blue-950 mx-auto">
         {% if request.user.is_authenticated %}
             {% include "logged_nav.html" %}
         {% else %}
@@ -16,7 +16,7 @@
         {% endif %}
     
     </header>
-    <main class="py-8 container mx-auto max-w-10/12">
+    <main class="py-4 mx-auto container max-w-11/12">
     
     {% block content %} 
     {% endblock content %}

@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.urls import path
-from events.views import events_overview, events_list, event_details, events,participants,categories, create_event, create_participant, create_category,update_event,delete_event,update_participant, delete_participant, update_category, delete_category, search_result
+from events.views import events_dashboard, events_list, event_details, events,participants,categories, create_event, create_participant, create_category,update_event,delete_event,update_participant, delete_participant, update_category, delete_category, search_result
 
 urlpatterns = [
 path('admin/', admin.site.urls),
-path('events_overview/',events_overview, name='events_overview'),
+path('events_dashboard/',events_dashboard, name='events_dashboard'),
 path('event_list/',events_list,name='events_list'),
 path('event_details/<int:id>',event_details,name='event_details'),
 path('events/',events,name='events'),
