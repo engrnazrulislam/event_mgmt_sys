@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from users.forms import RegisterForm, CustomRegistrationForm
+from users.forms import CustomRegistrationForm
 
 # Create your views here.
 def sign_up(request):

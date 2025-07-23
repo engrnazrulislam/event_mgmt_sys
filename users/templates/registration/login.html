@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Login{% endblock title %}
 {% block content %}
-        <div class="hero min-h-fit ">
-            <div class="hero-content flex-col lg:flex-row-reverse">
-                <div class="card flex-shrink-0 w-full max-w-lg shadow-2xl bg-base-100">
-                    <form method="POST" class="card-body">
+        <div class="hero-content">
+                <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                    <form method="POST" class="card-body flex justify-center">
                         {% csrf_token %}
                         <input type="text" name="username" id="" placeholder="username" class="input input-bordered input-primary w-full max-w-xs">
                         <input type="password" name="password" id=""placeholder="password" class="input input-bordered input-primary w-full max-w-xs">
-                        <button type="submit" class="btn btn-primary normal-case text-white w-full max-w-xs">Login</button>
+                        <div class="flex justify-end items-center">
+                            <button type="submit" class="border-purple-200  hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700 border-2 rounded-lg shadow-xl p-2 w-fit">Login</button>
+                        </div>
                     </form>
                 </div>
-            </div>
         </div>
 {% endblock content %}

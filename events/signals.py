@@ -4,17 +4,6 @@ from django.core.mail import send_mail
 from events.models import Event, Participant
 from django.conf import settings
 
-# @receiver(m2m_changed, sender=Participant.participant_to.through)
-# def notify_participants_on_assignment(sender, instance, action, **kwargs):
-#     if action == 'post_add':
-#         assigned_emails = [p.email for p in instance.participant_to.all()] 
-#         send_mail(  
-#             "New Task Assigned",
-#             f"You have been assigned for New Task:{instance.name}",
-#             "tscrpbl@gmail.com",
-#             assigned_emails,
-#             fail_silently=False
-#         )
 @receiver(m2m_changed, sender=Participant.participant_to.through)
 def notify_on_event_creation(sender, instance, action, **kwargs):
     if action == 'post_add':
