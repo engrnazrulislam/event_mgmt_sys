@@ -1,9 +1,12 @@
 {% extends "base.html" %}
-{% block content %}
 {% block title %}Create Category{% endblock title %}
-<div class="w-11/12 mx-auto">
-    <div class="mx-auto w-9/12 mt-8 border-2 rounded-xl shadow-xl bg-white p-12">
-        <div>
+{% block content %}
+<div >
+    <div class="hero-content">
+        <div class="card flex-shrink-0 w-full max-w-2xl shadow-2xl bg-base-100">
+            <div class="flex justify-center items-center pt-8">
+                <h1 class="font-bold text-2xl">Add a New Category</h1>
+            </div>
         {% if messages %}
             {% for message in messages %}
                 <div class="px-2 py-1 {% if message.tags == 'success' %} bg-green-600 {% endif %}"> 
@@ -12,10 +15,12 @@
             {% endfor %}
             
         {% endif %}
-        <form method="POST" class="font-semibold form-control">
+        <form method="POST" class="card-body">
             {% csrf_token %}
             {{category_form}}
-            <button type="submit" class="border-purple-200  hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700 border-2 rounded-lg shadow-xl p-2">Submit</button>
+            <div class="flex justify-end items-center">
+                <button type="submit" class="border-purple-200  hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700 border-2 rounded-lg shadow-xl p-2 w-fit">Add</button>
+            </div>
         </form>
         </div>
     </div>

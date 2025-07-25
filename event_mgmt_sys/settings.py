@@ -1,5 +1,6 @@
 import dj_database_url
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--#523lpsx013h)m&7!u!$wj_eyez-2(u_us7p@mxww)jp1+ye='
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -79,8 +80,8 @@ WSGI_APPLICATION = 'event_mgmt_sys.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default='postgresql://event_mgmt_sys_db_user:r0NFvuu1TNYzqoQ2Qtm4WL8OSg2NzL0K@dpg-d1mb0ku3jp1c73eia510-a.oregon-postgres.render.com/event_mgmt_sys_db',
-        conn_max_age=600
+        default=config('DB_ADDRESS'),
+        conn_max_age=int(config('DB_CON_AGE'))
     )
 }
 
@@ -136,6 +137,9 @@ STATICFILES_DIRS=[
     BASE_DIR / 'static'
 ]
 
+MEDIA_URL ='/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
@@ -147,3 +151,15 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Use SMTP backend for sending emails
+EMAIL_HOST = config('EMAIL_HOST')  # Replace with your email provider's SMTP host
+EMAIL_PORT = config('EMAIL_PORT')  # Common port for TLS (587) or SSL (465)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')  # Set to True if your SMTP server requires TLS encryption
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')  # Your email address for authentication
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')  # Your email password or app-specific password
+#DEFAULT_FROM_EMAIL = EMAIL_HOST_USER # Optional: Sets the default 'from' email address for outgoing emails
+FRONTEND_URL='http://127.0.0.1:8000'
+
+LOGIN_URL = 'sign_in'
+

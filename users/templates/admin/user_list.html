@@ -1,0 +1,31 @@
+<div class="hero bg-base-100 rounded-lg w-11/12 mx-auto">
+  <table class="table">
+    <caption class="py-4 text-xl font-bold">Lists of all users:</caption>
+    <!-- head -->
+    <thead>
+      <tr>
+        <th>S/N.</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>User ID</th>
+        <th>Current Role</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- row 1 -->
+      {% for user in users %}
+        <tr class="hover:bg-gray-50">
+          <td class="px-4 py-4 whitespace-nowrap">{{forloop.counter}}</td>
+          <td class="px-4 py-4 whitespace-nowrap">{{user.first_name}} {{user.last_name}}</td>
+          <td class="px-4 py-4 whitespace-nowrap">{{user.email}}</td>
+          <td class="px-4 py-4 whitespace-nowrap">{{user.id}}</td>
+          <td class="px-4 py-4 whitespace-nowrap">{{user.group_name}}</td>
+          <td class="px-4 py-4 whitespace-nowrap">
+            <a href="{% url 'assigned_role' user.id %}" role="btn" class="btn btn-outline btn-primary normal-case">Change Role</a>
+          </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>

@@ -1,9 +1,53 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Home{% endblock title %}
 {% block content %}
-<div class="text-white">
-    <div class="w-full text-white text-3xl font-bold text-center">
-        Welcome to Event Management Systems
+<div>
+    <div class="bg-base-100 rounded-lg my-4 py-4">
+        <h1 class="text-center text-4xl font-bold pb-4">Welcome to Event Management Systems</h1>
     </div>
+
+    <div class="carousel w-full max-h-96 rounded-lg object-cover">
+        <div id="slide1" class="carousel-item relative w-full">
+            <img src="{% static "images/events1.jpg" %}" class="w-full" />
+            <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+            <a href="#slide4" class="btn btn-circle">❮</a> 
+            <a href="#slide2" class="btn btn-circle">❯</a>
+            </div>
+        </div> 
+        <div id="slide2" class="carousel-item relative w-full">
+            <img src="{% static "images/events2.jpg" %}" class="w-full" />
+            <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+            <a href="#slide1" class="btn btn-circle">❮</a> 
+            <a href="#slide3" class="btn btn-circle">❯</a>
+            </div>
+        </div> 
+        <div id="slide3" class="carousel-item relative w-full">
+            <img src="{% static "images/events3.jpg" %}" class="w-full" />
+            <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+            <a href="#slide2" class="btn btn-circle">❮</a> 
+            <a href="#slide4" class="btn btn-circle">❯</a>
+            </div>
+        </div> 
+    </div>
+
+    <div class="bg-white py-12 px-6 md:px-12 lg:px-20 my-8 rounded-lg">
+        <div class="max-w-5xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+            Simplify & Supercharge Your Events
+            </h2>
+            <p class="text-lg text-gray-600 leading-relaxed">
+            Our <span class="font-semibold text-blue-600">Event Management System</span> is an all-in-one platform that helps you plan, organize, and execute events effortlessly. 
+            From creating stunning event pages to handling registrations, payments, and real-time updates—everything is streamlined in one place.
+            </p>
+            <p class="text-lg text-gray-600 mt-4 leading-relaxed">
+            Whether you're hosting corporate conferences, university seminars, weddings, or workshops, our system gives you full control with tools 
+            for scheduling, ticketing, team collaboration, vendor management, and detailed analytics to measure success. 
+            Say goodbye to spreadsheets and manual coordination—manage smarter, faster, and stress-free.
+            </p>
+        </div>
+    </div>
+
+
 </div>
 {% endblock content %}

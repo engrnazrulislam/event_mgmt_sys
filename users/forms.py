@@ -1,84 +1,75 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from django import forms
+from django.contrib.auth.models import User, Group, Permission
 import re
+from events.forms import StyleFormMixing
+from django.contrib.auth.forms import AuthenticationForm
 
-class RegisterForm(UserCreationForm):
-    class Meta:
-            model = User
-            fields = ['username','first_name','last_name','password1','password2','email']
-
-    def __init__(self, *args, **kwargs):
-        super(UserCreationForm, self).__init__(*args, **kwargs)
-
-        # set helptext = none in all field
-        # by using loop get all fields
-        for fieldname in ['username','password1','password2']:
-            self.fields[fieldname].help_text = None
-        
-# Customized Registration Forms:
-class CustomRegistrationForm(forms.ModelForm):
-    password1 = forms.CharField(widget=forms.PasswordInput) # Here is not found any password field. 
-    #So we use wigets which is used to unreadable password
+class CustomRegistrationForm(StyleFormMixing, forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
     confirmed_password = forms.CharField(widget=forms.PasswordInput)
+
     class Meta:
         model = User
-        fields = ['username','first_name','last_name','password1','confirmed_password','email']
+        fields = ['username', 'first_name', 'last_name', 'email']  # exclude password fields
 
-    # Now we make some clean method for validation
-    def clean_password1(self):
-        password1 = self.cleaned_data.get('password1')
-        
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
         errors = []
-        # Condition for error checking
-        if len(password1) < 8:
-            # raise forms.ValidationError('Password must be 8 character long')
-            errors.append('Password must be 8 character long')
-         # Home work implement regular expression
 
-        if re.search(r'[A-Z]',password1):
-            errors.append('Password does not contain any capital letter')
+        if len(password) < 8:
+            errors.append('Password must be at least 8 characters long')
 
-        if re.search(r'[a-z]',password1):
-            errors.append('Password does not contain small letter')
+        if not re.search(r'[A-Z]', password):
+            errors.append('Password must contain at least one uppercase letter')
 
-        if re.search(r'[0-9]',password1):
-            errors.append('Password does not contain any number')
-        
-        if re.search(r'[@*#$+=]',password1):
-            errors.append('Password does not contain any special character')
-                
+        if not re.search(r'[a-z]', password):
+            errors.append('Password must contain at least one lowercase letter')
+
+        if not re.search(r'[0-9]', password):
+            errors.append('Password must contain at least one digit')
+
+        if not re.search(r'[@*#$+=]', password):
+            errors.append('Password must contain at least one special character (@, *, #, $, +, =)')
+
         if errors:
             raise forms.ValidationError(errors)
-        
-        return password1
 
-        # if re.fullmatch(r'[A-Za-z0-9#$%@^+=]',password1):
-        #         raise forms.ValidationError('Password must contain uppercase, lowercase, min 8 character')
-    # non-field validataion
+        return password
+
     def clean(self):
-        clean_data = super().clean()
-        password = clean_data.get('password1')
-        confirmed_password = clean_data.get('confirmed_password')
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirmed_password = cleaned_data.get('confirmed_password')
 
         if password and confirmed_password and password != confirmed_password:
-            raise forms.ValidationError('Password does not match')
+            raise forms.ValidationError("Passwords do not match.")
 
-        return clean_data
+        return cleaned_data
 
-    # Home work email validation
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        email_exists = User.objects.filter(email=email).exists()
-        if email_exists:
+        if User.objects.filter(email=email).exists():
             raise forms.ValidationError('Email already exists')
-        
         return email
-    
 
-   
-
-
-    
+class LoginForm(StyleFormMixing, AuthenticationForm):
+    def __init__(self, *arg, **kwargs):
+        super().__init__(*arg, **kwargs)
 
 
+class AssignRoleForm(StyleFormMixing, forms.Form):
+    role = forms.ModelChoiceField(
+        queryset=Group.objects.all(),
+        empty_label="Select a Role"
+    )
+
+class CreateGroupForm(StyleFormMixing, forms.ModelForm):
+    permissions = forms.ModelMultipleChoiceField(
+        queryset = Permission.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        label='Assign Permission'
+    )
+    class Meta:
+        model = Group
+        fields = ['name','permissions']

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock title %}
+{% block content %}
+<div class="grid lg:grid-cols-4 my-8 gap-4 w-11/12 mx-auto">
+    <div class="card-compact bg-base-100 shadow-xl rounded-lg">
+        <div class="card-body">
+            <p class="text-justify text-md p-2 mb-4">To show group details of the all user groups in the systems. Click on details button</p>
+            <a href="{% url "group_list" %}" role="btn" class="btn btn-outline">Group Details</a>
+        </div>
+    </div>
+    <div class="card-compact bg-base-100 shadow-xl rounded-lg">
+        <div class="card-body">
+            <p class="text-justify text-md p-2 mb-4">To create a new group in the event management systems. Click on create group button</p>
+            <a href="{% url "create_group" %}" role="btn" class="btn btn-outline btn-primary">Create Group</a>
+        </div>
+    </div>
+    <div class="card-compact bg-base-100 shadow-xl rounded-lg">
+        <div class="card-body">
+            <p class="text-justify text-md p-2 mb-4">To create, update and delete event in the systems. Click on the events button</p>
+            <a href="{% url "events" %}" role="btn" class="btn btn-outline btn-secondary">Events</a>
+        </div>
+    </div>
+    <div class="card-compact bg-base-100 shadow-xl rounded-lg">
+        <div class="card-body">
+            <p class="text-justify text-md p-2 mb-4">To create, update and delete category in the systems. Click on Category button</p>
+            <a href="{% url "categories" %}" role="btn" class="btn btn-outline btn-accent">Category</a>
+        </div>
+    </div>
+</div>
+    {% include "admin/user_list.html" %}
+{% endblock content %}
