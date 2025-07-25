@@ -1,8 +1,10 @@
 <div class="navbar w-11/12 mx-auto">
     <div class="navbar-start">
         <a href="{% url "home" %}" role="button" class="btn btn-ghost normal-case text-white text-xl">Home</a>
-        <a href="{% url "events_dashboard" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Events Dashboard</a>
-        <a href="{% url "events_list" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Events List</a>
+    </div>
+    <div class="navbar-center block">
+        <h1 class="text-2xl font-bold text-white text-center">Event Management System</h1>
+        <p class="text-xl font-normal text-white text-center">Dhaka, Bangladesh</p>
     </div>
     <div class="navbar-end">
         <form action="{% url "sign_in" %}"method="POST">

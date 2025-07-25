@@ -1,6 +1,8 @@
-{% extends "admin/dashboard.html" %}
-{% block content2 %}
-    <div class='w-1/2 mx-auto my-8'>
+{% extends "base.html" %}
+{% block content %}
+    <div class="card-compact bg-base-100 shadow-xl rounded-lg w-1/2 mx-auto">
+    <div class='card-body justify-center items-center'>
+        <h1 class="text-xl text-center font-bold p-4">Change User Role:</h1>
         <ul>
             {% for message in messages %}
                 <li class="bg-green-500 text-white px-1 py-2">{{message}}</li>
@@ -12,4 +14,5 @@
             <button type="submit" class="mt-6 px-2 py-1 text-white bg-blue-500 rounded">Assign Role</button>
         </form>
     </div>
-{% endblock content2 %}
+</div>
+{% endblock content %}

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Event Details{% endblock title %}
 {% block content %}
-<div class="flex justify-between items-top gap-4">
+<div class="flex flex justify-between items-top gap-4">
 {% comment %} Event Detail Section {% endcomment %}
 <div class="bg-white p-8 flex-1 rounded-xl shadow-xl">
     <h2 class="text-2xl font-bold mb-4">Event Details</h2>
@@ -10,12 +10,23 @@
     <p><strong>Location:</strong> {{ event_details.location }}</p>
     <p><strong>Category:</strong> {{ event_details.category.name }}</p>
     <p><strong>Date:</strong> {{ event_details.date }}</p>
+    <div class="card-compact w-72 bg-base-100 shadow-xl">
+            <div class="card-body">
+                <h2 class="text-xl font-bold mb-4">ASSETS</h2>
+                <img
+                src={{event_details.asset.url}}
+                alt="Event Image"
+                class="w-full rounded-lg"
+                />
+            </div>
+    </div>
 </div>
+
 {% comment %} Participants Display Section {% endcomment %}
 <div class="bg-white p-8 flex-1 rounded-xl shadow-xl ">
     <h3 class="text-xl font-semibold mb-4">Participants:</h3>
 
-    {% if event_details.participants.all %}
+    {% if event_details.participant.all %}
         <div class="overflow-x-auto">
             <table class="table table-zebra">
                 <!-- head -->
@@ -28,10 +39,10 @@
                 </thead>
                 <tbody>
                 <!-- row 1 -->
-                 {% for participant in event_details.participants.all %}
+                 {% for participant in event_details.participant.all %}
                 <tr>
                     <th>{{forloop.counter}}</th>
-                    <td>{{participant.name}}</td>
+                    <td>{{participant.get_full_name}}</td>
                     <td>{{participant.email}}</td>
                 </tr>
                 {% endfor %}

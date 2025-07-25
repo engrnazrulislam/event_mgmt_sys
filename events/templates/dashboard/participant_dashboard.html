@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Participant Dashboard{% endblock title %}
+{% block content %}
+<div class="grid lg:grid-cols-1 my-8 gap-4 w-11/12 mx-auto">
+    <div class="card-compact bg-base-100 shadow-xl rounded-lg">
+        <div class="card-body">
+            <p class="text-justify text-md p-2 mb-4">To show all of the events in the systems. Click on the event details button</p>
+            <a href="{% url "events_list" %}" role="btn" class="btn btn-outline btn-secondary">Event Details</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

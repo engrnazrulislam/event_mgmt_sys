@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User, Group, Permission
 import re
 from events.forms import StyleFormMixing
+from django.contrib.auth.forms import AuthenticationForm
 
 class CustomRegistrationForm(StyleFormMixing, forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -50,6 +51,11 @@ class CustomRegistrationForm(StyleFormMixing, forms.ModelForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('Email already exists')
         return email
+
+class LoginForm(StyleFormMixing, AuthenticationForm):
+    def __init__(self, *arg, **kwargs):
+        super().__init__(*arg, **kwargs)
+
 
 class AssignRoleForm(StyleFormMixing, forms.Form):
     role = forms.ModelChoiceField(

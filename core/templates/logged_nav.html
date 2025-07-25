@@ -1,14 +1,10 @@
-  <div class="navbar w-11/12 mx-auto">
+  <div class="navbar w-10/12 mx-auto">
     <div class="navbar-start">
-      <a href="{% url "admin_dashboard" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Admin Dashboard</a>
+      <a href="{% url "dashboard" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Dashboard</a>
     </div>
-      <div class="navbar-center">
-        <a href="{% url "group_list" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Groups</a>
-        <a href="{% url "create_group" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Create Group</a>
-        <a href="{% url "events" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Events</a>
-        <a href="{% url "categories" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Category</a>
-      </div>
       <div class="navbar-end">
+        <a href="{% url "events_dashboard" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Events Dashboard</a>
+        <a href="{% url "events_list" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Events Details</a>
         <form method="GET" action="{% url "search_result" %}">
           <div class="flex justify-between items-center gap-2">
               <div class="form-control">

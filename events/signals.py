@@ -6,21 +6,16 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 @receiver(m2m_changed, sender=Event.participant.through)
-def notify_on_event_rsvp(sender, instance, action, pk_set, **kwargs):
+def notify_employees_on_task_creation(sender, instance, action, **kwargs):
     if action == 'post_add':
-        for user_id in pk_set:
-            try:
-                user = User.objects.get(pk=user_id)
-                send_mail(
-                    subject="RSVP Confirmation",
-                    message=f"Dear {user.get_full_name() or user.username},\n\nYou have been added as a participant to the event: '{instance.name}' scheduled on {instance.date}.",
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[user.email],
-                    fail_silently=False
-                )
-                print(f"Email sent to {user.email}")
-            except User.DoesNotExist:
-                print(f"User with ID {user_id} not found.")
+        assigned_emails = [user.email for user in instance.participant.all() if user.email]
+        send_mail(  
+            "New Task Assigned",
+            f"You have been assigned for New Task:{instance.name}",
+            "tscrpbl@gmail.com",
+            assigned_emails,
+            fail_silently=False
+        )
 
 @receiver(post_delete, sender=Event)
 def delete_events(sender, instance, **kwargs):

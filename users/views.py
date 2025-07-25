@@ -1,13 +1,33 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
-from users.forms import CustomRegistrationForm, AssignRoleForm, CreateGroupForm
+from users.forms import CustomRegistrationForm, AssignRoleForm, CreateGroupForm, LoginForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.tokens import default_token_generator
 from django.db.models import Prefetch
+from django.contrib.auth.models import User, Group
 
 # Create your views here.
+
+def is_Admin(user):
+    return user.groups.filter(name='admin').exists()
+
+def is_Organizer(user):
+    return user.groups.filter(name='Organizer').exists()
+
+def is_Participant(user):
+    return user.groups.filter(name='Participant').exists()
+
+def is_Admin_Organizer(user):
+    return is_Admin(user) or is_Organizer(user)
+
+def is_Admin_Participant(user):
+    return is_Admin(user) or is_Participant(user)
+
+def is_All(user):
+    return is_Admin(user) or is_Organizer(user) or is_Participant(user)
+
 def sign_up(request):
     form = CustomRegistrationForm()
     if request.method == 'POST':
@@ -20,17 +40,16 @@ def sign_up(request):
             return redirect('sign_in')
     return render(request,'registration/registration.html',{'form':form})
 
+# Sign-in Section
 def sign_in(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = authenticate(username=username,password=password)
-
-        if user is not None:
+    form = LoginForm()
+    if request.method == 'POST':
+        form = LoginForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
             login(request, user)
             return redirect('home')
-    return render(request, 'registration/login.html')
+    return render(request, 'registration/login.html', {'form': form})
 
     # logout implementation
 @login_required

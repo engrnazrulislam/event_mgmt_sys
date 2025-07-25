@@ -1,32 +1,16 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from events.models import Event, Category
-from django.contrib.auth.models import User
 from datetime import date
 from django.db.models import Count, Q
 from events.forms import EventModelForm, ParticipantSelectionForm, ParticipantModelForm, CategoryModelForm
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test, login_required, permission_required
-
+from users.views import is_Admin, is_Organizer, is_Participant, is_Admin_Organizer, is_All, is_Admin_Participant
 
 # Create your views here.
-def is_Admin(user):
-    return user.groups.filter(name='admin').exists()
 
-def is_Organizer(user):
-    return user.groups.filter(name='Organizer').exists()
-
-def is_Participant(user):
-    return user.groups.filter(name='Participant').exists()
-
-def is_Admin_Organizer(user):
-    return is_Admin(user) or is_Organizer(user)
-
-def is_Admin_Participant(user):
-    return is_Admin(user) or is_Participant(user)
-
-def is_All(user):
-    return is_Admin(user) or is_Organizer(user) or is_Participant(user)
 
 def events_dashboard(request):
     type=request.GET.get('type','all')
@@ -111,13 +95,13 @@ def create_event(request):
     selection_form = ParticipantSelectionForm()
 
     if request.method == 'POST':
-        event_form = EventModelForm(request.POST) # For Django Model Form
+        event_form = EventModelForm(request.POST, request.FILES) # For Django Model Form
         selection_form = ParticipantSelectionForm(request.POST)
         if event_form.is_valid() and selection_form.is_valid():
             """ For Django Model Form """
             event = event_form.save()
-            selected_participants = selection_form.cleaned_data['participant']
-            event.participants.set(selected_participants)
+            selected_participants = selection_form.cleaned_data['participants']
+            event.participant.set(selected_participants)
 
             messages.success(request,'Event Created Successfully')
             return redirect('create_event')
@@ -243,31 +227,22 @@ def search_result(request):
     })
 
 @login_required
-def rsvp_event(request, event_id):
-    event = Event.objects.get(pk=event_id)
-    user = request.user
-
-    if event.participants.filter(id=user.id).exists():
-        messages.warning(request, "You already RSVPed to this event.")
-    else:
-        event.participants.add(user)
-        messages.success(request, "RSVP successful! A confirmation email will be sent.")
-    
-    return redirect('event_details', id=event.id)
-
-@login_required
 @user_passes_test(is_Organizer, login_url='no_permission')
-def employee_dashboard(request):
-    events = request.user.rsvp_events.all()
-    return render(request, 'users/employee_dashboard.html', {'events': events})
+def organizer_dashboard(request):
+    # organizer_events = Event.objects.filter(created_by=request.user)
+    return render(request, 'dashboard/organizer_dashboard.html')
+@login_required
+@user_passes_test(is_Participant, login_url='no_permission')
+def participant_dashboard(request):
+    return render(request, 'dashboard/participant_dashboard.html')
 
 @login_required
 def dashboard(request):
     if is_Admin(request.user):
         return redirect('admin_dashboard')
     elif is_Organizer(request.user):
-        return redirect('manager_dashboard')
+        return redirect('organizer_dashboard')
     elif is_Participant(request.user):
-        return redirect('employee_dashboard')
+        return redirect('participant_dashboard')
     
     return redirect('no_permission')

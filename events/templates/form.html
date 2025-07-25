@@ -15,7 +15,7 @@
             {% endfor %}
            
         {% endif %}
-        <form method="POST" class="card-body">
+        <form method="POST" class="card-body" enctype = "multipart/form-data">
             {% csrf_token %}
             {{ event_form}}
             {{selection_form}}

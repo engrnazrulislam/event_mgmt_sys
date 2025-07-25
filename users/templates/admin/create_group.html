@@ -1,5 +1,5 @@
-{% extends "admin/dashboard.html" %}
-{% block content2 %}
+{% extends "base.html" %}
+{% block content %}
     <div class='w-1/2 mx-auto my-8'>
         <ul>
             {% for message in messages %}
@@ -12,4 +12,4 @@
             <button type="submit" class="mt-6 px-2 py-1 text-white bg-blue-500 rounded">Create Group</button>
         </form>
     </div>
-{% endblock content2 %}
+{% endblock content %}

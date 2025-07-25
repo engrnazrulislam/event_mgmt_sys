@@ -16,7 +16,9 @@ class Event(models.Model):
         related_name='events'
     )
     participant = models.ManyToManyField(User, related_name='rsvp_events', blank=True)
-    # reverse relation name "participants"
+    # reverse relation name "rsvp_events"
+    asset = models.ImageField(upload_to='events_asset', blank=True, null=True, default='events_asset/default_img.png')
+
     def __str__(self):
         return self.name
 # Participant Model

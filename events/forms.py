@@ -53,7 +53,7 @@ class StyleFormMixing:
 class EventModelForm(StyleFormMixing, forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['name','description','date','location','category']
+        fields = ['name','description','date','location','category','asset']
         widgets={
             'date':forms.SelectDateWidget,
             'category': forms.Select
