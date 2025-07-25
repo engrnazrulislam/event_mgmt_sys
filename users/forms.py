@@ -1,70 +1,69 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 from django import forms
+from django.contrib.auth.models import User, Group, Permission
 import re
 from events.forms import StyleFormMixing
 
-# Customized Registration Forms:
-class CustomRegistrationForm(StyleFormMixing,forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput) # Here is not found any password field. 
-    #So we use wigets which is used to unreadable password
+class CustomRegistrationForm(StyleFormMixing, forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
     confirmed_password = forms.CharField(widget=forms.PasswordInput)
+
     class Meta:
         model = User
-        fields = ['username','first_name','last_name','password','confirmed_password','email']
+        fields = ['username', 'first_name', 'last_name', 'email']  # exclude password fields
 
-    # Now we make some clean method for validation
     def clean_password(self):
         password = self.cleaned_data.get('password')
-        
         errors = []
-        # Condition for error checking
+
         if len(password) < 8:
-            # raise forms.ValidationError('Password must be 8 character long')
-            errors.append('Password must be 8 character long')
-         # Home work implement regular expression
+            errors.append('Password must be at least 8 characters long')
 
-        if re.search(r'[A-Z]',password):
-            errors.append('Password does not contain any capital letter')
+        if not re.search(r'[A-Z]', password):
+            errors.append('Password must contain at least one uppercase letter')
 
-        if re.search(r'[a-z]',password):
-            errors.append('Password does not contain small letter')
+        if not re.search(r'[a-z]', password):
+            errors.append('Password must contain at least one lowercase letter')
 
-        if re.search(r'[0-9]',password):
-            errors.append('Password does not contain any number')
-        
-        if re.search(r'[@*#$+=]',password):
-            errors.append('Password does not contain any special character')
-                
+        if not re.search(r'[0-9]', password):
+            errors.append('Password must contain at least one digit')
+
+        if not re.search(r'[@*#$+=]', password):
+            errors.append('Password must contain at least one special character (@, *, #, $, +, =)')
+
         if errors:
             raise forms.ValidationError(errors)
-        
+
         return password
-    
-    # non-field validataion
+
     def clean(self):
-        clean_data = super().clean()
-        password = clean_data.get('password')
-        confirmed_password = clean_data.get('confirmed_password')
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirmed_password = cleaned_data.get('confirmed_password')
 
         if password and confirmed_password and password != confirmed_password:
-            raise forms.ValidationError('Password does not match')
+            raise forms.ValidationError("Passwords do not match.")
 
-        return clean_data
+        return cleaned_data
 
-    # Home work email validation
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        email_exists = User.objects.filter(email=email).exists()
-        if email_exists:
+        if User.objects.filter(email=email).exists():
             raise forms.ValidationError('Email already exists')
-        
         return email
-    
 
-   
+class AssignRoleForm(StyleFormMixing, forms.Form):
+    role = forms.ModelChoiceField(
+        queryset=Group.objects.all(),
+        empty_label="Select a Role"
+    )
 
-
-    
-
-
+class CreateGroupForm(StyleFormMixing, forms.ModelForm):
+    permissions = forms.ModelMultipleChoiceField(
+        queryset = Permission.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        label='Assign Permission'
+    )
+    class Meta:
+        model = Group
+        fields = ['name','permissions']

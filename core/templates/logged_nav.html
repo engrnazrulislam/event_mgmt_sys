@@ -1,12 +1,11 @@
   <div class="navbar w-11/12 mx-auto">
-      <div class="navbar-start">
-        <a href="{% url "home" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Home</a>
-      </div>
+    <div class="navbar-start">
+      <a href="{% url "admin_dashboard" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Admin Dashboard</a>
+    </div>
       <div class="navbar-center">
-        <a href="{% url "events_dashboard" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Events Dashboard</a>
-        <a href="{% url "events_list" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Events List</a>
+        <a href="{% url "group_list" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Groups</a>
+        <a href="{% url "create_group" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Create Group</a>
         <a href="{% url "events" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Events</a>
-        <a href="{% url "participants" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Participants</a>
         <a href="{% url "categories" %}" role="button" class="btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg normal-case text-white">Category</a>
       </div>
       <div class="navbar-end">
@@ -16,12 +15,12 @@
                 <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" name='q' value="{{query}}"/>
               </div>
           <div>
-            <button class="btn btn-outline normal-case text-white">Search</button>
+            <button class="btn btn-outline btn-md normal-case text-white">Search</button>
           </div>
         </form>
         <form action="{% url "sign_out" %}"method="POST">
             {% csrf_token %}
-            <button type="submit" class="btn btn-outline normal-case text-white">Logout</button>
+            <button type="submit" class="btn btn-outline btn-md normal-case text-white">Logout</button>
         </form>
       </div>
   </div>  

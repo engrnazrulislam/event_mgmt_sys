@@ -1,5 +1,6 @@
 from django import forms
-from events.models import Event, Participant, Category
+from events.models import Event, Category
+from django.contrib.auth.models import User
 
 """Form Mixing"""
 class StyleFormMixing:
@@ -29,18 +30,18 @@ class StyleFormMixing:
                     'class': "input input-bordered w-full max-w-full",
                     'placeholder': f"Enter {label.lower()}"
                 })
-            elif isinstance(field.widget, forms.SelectDateWidget):
+            elif isinstance(field.widget,forms.SelectDateWidget):
                 field.widget.attrs.update({
-                    'class': "select select-bordered w-full"
+                    'class': "border border-2 rounded-lg p-2 space-x-2",
                 })
             elif isinstance(field.widget, forms.Select):
                 field.widget.attrs.update({
-                    'class': "select select-bordered w-full",
+                    'class': "border border-2 rounded-lg p-2",
                     'placeholder': f"Select {label.lower()}"
                 })
-            elif isinstance(field.widget, forms.CheckboxSelectMultiple):
+            elif isinstance(field.widget,forms.CheckboxSelectMultiple):
                 field.widget.attrs.update({
-                    'class': "flex gap-2"
+                    'class':"border-2 rounded-lg p-4"
                 })
             else:
                 field.widget.attrs.update({
@@ -59,21 +60,21 @@ class EventModelForm(StyleFormMixing, forms.ModelForm):
         }
     
 class ParticipantSelectionForm(StyleFormMixing, forms.Form):
-        participants = forms.ModelMultipleChoiceField(
-            queryset=Participant.objects.all(),
-            widget=forms.CheckboxSelectMultiple,
-            required=False,
-            label="Select Participants"
-            )
-        class Meta:
-            model = Participant
-            fields = ['name','email','participants']
+    participants = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        label="Select Participants"
+    )
 
         
 class ParticipantModelForm(StyleFormMixing, forms.ModelForm):
     class Meta:
-        model = Participant
-        fields = ['name', 'email']
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username', 'password']
+        widgets = {
+            'password': forms.PasswordInput()
+        }
 
     
 class CategoryModelForm(StyleFormMixing, forms.ModelForm):

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 # Event Model
@@ -14,20 +15,21 @@ class Event(models.Model):
         default=1,
         related_name='events'
     )
+    participant = models.ManyToManyField(User, related_name='rsvp_events', blank=True)
     # reverse relation name "participants"
     def __str__(self):
         return self.name
 # Participant Model
-class Participant(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=200)
-    participant_to = models.ManyToManyField(
-        Event,
-        related_name='participants'
-    )
+# class Participant(models.Model):
+#     name = models.CharField(max_length=100)
+#     email = models.EmailField(max_length=200)
+#     participant_to = models.ManyToManyField(
+#         Event,
+#         related_name='participants'
+#     )
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 # Category Model
 class Category(models.Model):
