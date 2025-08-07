@@ -9,7 +9,7 @@
             </div>
         {% if messages %}
             {% for message in messages %}
-                <div class="px-2 py-1 {% if message.tags == 'success' %} bg-green-600 {% endif %}"> 
+                <div class="px-2 mx-1 py-1 {% if message.tags == 'success' %} text-green-600 {% endif %}"> 
                     {{message}} 
                 </div>
             {% endfor %}

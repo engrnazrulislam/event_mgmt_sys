@@ -8,10 +8,10 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test, login_required, permission_required
 from users.views import is_Admin, is_Organizer, is_Participant, is_Admin_Organizer, is_All, is_Admin_Participant
+from django.views.generic import ListView
+from django.utils.decorators import method_decorator
 
 # Create your views here.
-
-
 def events_dashboard(request):
     type=request.GET.get('type','all')
     base_query = Event.objects
@@ -47,6 +47,47 @@ def events_dashboard(request):
     }
     return render(request, 'events_dashboard.html', context)
 
+#class based view
+event_decorator = [login_required]
+@method_decorator(event_decorator, name='dispatch')
+class EventDashboard(ListView):
+    model = Event
+    template_name = 'events_dashboard.html'
+    context_object_name = 'events'
+
+    def get_queryset(self):
+        type = self.request.GET.get('type','all')
+        base_query = Event.objects
+        if type=='total_events':
+            events_data = base_query.all()
+        elif type == 'upcoming_events':
+            events_data = base_query.filter(date__gt=date.today()).all()
+        elif type == 'past_events':
+            events_data = base_query.filter(date__lt=date.today()).all()
+        elif type == 'all':
+            events_data = base_query.all()
+        return events_data
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        data = Event.objects.all()
+        counts = Event.objects.aggregate(
+            num_events=Count('id',distinct=True),
+            num_participants=Count('participant',distinct=True),
+            )
+        context['today_date']=date.today()
+        context['dashboard_name'] = "Dashboard"
+        context['total_events'] = counts['num_events']
+        context['total_participants'] = counts['num_participants']
+        context['past_events'] = data.filter(date__lt=date.today()).count()
+        context['upcoming_events'] = data.filter(date__gt=date.today()).count()
+        context['data'] = data
+        context['events_data']= {
+            "e_data":self.get_queryset,
+            "d_type": type
+            }
+        return context
+
 def events_list(request):
     events = Event.objects.select_related('category').annotate(total_participants=Count('participant', distinct=True))
     context={
@@ -55,6 +96,19 @@ def events_list(request):
     }
     return render(request,'events_list.html',context)
 
+#class based view
+class EventList(ListView):
+    model = Event
+    template_name = 'events_list.html'
+    context_object_name = 'events'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['dashboard_name'] = 'Home'
+        events = Event.objects.select_related('category').annotate(total_participants=Count('participant', distinct=True))
+        context['all_events'] = events
+        return context
+    
 @login_required
 @user_passes_test(is_All, login_url='no_permission')
 def event_details(request,id):
