@@ -10,15 +10,15 @@ class CustomRegistrationForm(StyleFormMixing, forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'password', 'confirmed_password', 'email']  # exclude password fields
+        fields = ['username', 'first_name', 'last_name', 'email']  # exclude password fields
 
     def clean_password(self):
         password = self.cleaned_data.get('password')
         
-        """
+        
         errors = []
        
-        if not len(password) > 8:
+        if len(password) < 8:
             errors.append('Password must be at least 8 characters long')
 
         if not re.search(r'[A-Z]', password):
@@ -35,7 +35,7 @@ class CustomRegistrationForm(StyleFormMixing, forms.ModelForm):
 
         if errors:
             raise forms.ValidationError(errors)
-        """
+    
         return password
 
     def clean(self):

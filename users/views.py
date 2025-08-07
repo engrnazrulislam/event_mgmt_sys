@@ -78,7 +78,7 @@ def activate_user(request, user_id, token):
 def admin_dashboard(request):
     users = User.objects.prefetch_related(
         Prefetch('groups', queryset=Group.objects.all(), to_attr='all_groups')
-    ).all()
+    ).all().order_by('id')
 
     for user in users:
         if user.all_groups:
