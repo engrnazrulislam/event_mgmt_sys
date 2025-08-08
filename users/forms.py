@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User, Group, Permission
 import re
 from events.forms import StyleFormMixing
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 
 class CustomRegistrationForm(StyleFormMixing, forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -83,6 +83,7 @@ class EditProfileForm(forms.ModelForm):
         fields = ['email', 'first_name', 'last_name']
 
     bio = forms.CharField(required = False, widget = forms.Textarea, label='bio')
+    phone_number = forms.CharField(required=False, widget=forms.TextInput, label='Phone Number')
     profile_image = forms.ImageField(required=False, label='Profile Image')
 
     def __init__(self, *args, **kwargs):
@@ -92,6 +93,7 @@ class EditProfileForm(forms.ModelForm):
         # Todo: Handle Error
         if self.userprofile:
             self.fields['bio'].initial = self.userprofile.bio
+            self.fields['phone_number'].initial = self.userprofile.phone_number
             self.fields['profile_image'].initial = self.userprofile.profile_image
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -99,6 +101,7 @@ class EditProfileForm(forms.ModelForm):
         #save userprofile jodi thake
         if self.userprofile:
             self.userprofile.bio = self.cleaned_data.get('bio')
+            self.userprofile.phone_number = self.cleaned_data.get('phone_number')
             self.userprofile.profile_image = self.cleaned_data.get('profile_image')
 
             if commit:
@@ -107,6 +110,17 @@ class EditProfileForm(forms.ModelForm):
             user.save()
         
         return user
+
+class CustomPasswordChangeForm(StyleFormMixing, PasswordChangeForm):
+    pass
+
+class CustomPasswordResetForm(StyleFormMixing, PasswordResetForm):
+    pass
+
+class CustomPasswordResetConfirmForm(StyleFormMixing, SetPasswordForm):
+    pass
+
+
 """
 class EditProfileForm(StyleFormMixing, forms.ModelForm):
     class Meta:
