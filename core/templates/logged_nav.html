@@ -19,23 +19,25 @@
         <div class="dropdown dropdown-end">
           <label tabindex="0" class="btn btn-ghost btn-circle avatar">
             <div class="w-10 rounded-full">
-              <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              <img src="{{profile_image.url}}" />
             </div>
           </label>
           <ul tabindex="0" class="mt-2 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-auto">
             <li>
-              <a class="justify-between" href="{% url "dashboard" %}" role="button" class="normal-case">
+              <a class="justify-between" href="{% url 'dashboard' %}" role="button" class="normal-case">
                 Dashboard
               </a>
             </li>
-            <li><a>Profile</a></li>
             <li>
-              <a>
+              <a href="{% url 'profile' %}">Profile</a>
+            </li>
+            <li>
+              
               <form action="{% url "sign_out" %}"method="POST">
                 {% csrf_token %}
                 <button type="submit" class="normal-case">Logout</button>
               </form>
-              </a>
+              
             </li>
           </ul>
         </div>
