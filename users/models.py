@@ -1,10 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser
-# from django.contrib.auth.models import AbstractUser
-
+from django.contrib.auth.models import AbstractUser
+# from django.contrib.auth.models import User
 
 # Create your models here.
-
+"""
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE, related_name='userprofile', primary_key=True)
     profile_image = models.ImageField(upload_to = 'profile_images', blank=True)
@@ -16,8 +15,8 @@ class UserProfile(models.Model):
 """
 class CustomUser(AbstractUser):
     profile_image = models.ImageField(upload_to='profile_images', blank=True, default = 'profile_images/default_img.png')
-    bio = models.TextField(blank=True)
+    bio = models.TextField(blank=True, max_length=100)
+    phone_number = models.CharField(max_length=15, blank=True)
 
     def __str__(self):
         return self.username
-"""

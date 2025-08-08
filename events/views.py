@@ -5,15 +5,17 @@ from datetime import date
 from django.db.models import Count, Q
 from events.forms import EventModelForm, ParticipantSelectionForm, ParticipantModelForm, CategoryModelForm
 from django.contrib import messages
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.contrib.auth.decorators import user_passes_test, login_required, permission_required
-from users.views import is_Admin, is_Organizer, is_Participant, is_Admin_Organizer, is_All, is_Admin_Participant
+from users.views import is_Admin, is_Manager, is_Participant, is_Admin_Manager, is_All, is_Admin_Participant
 from django.views.generic import ListView
 from django.views import View
 from django.views.generic import CreateView
 from django.views.generic import UpdateView
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 # Create your views here.
 def events_dashboard(request):
@@ -53,8 +55,8 @@ def events_dashboard(request):
 
 #declare method decorator
 event_decorator = [login_required, user_passes_test(is_All, login_url='no_permission')]
-category_decorator = [login_required, user_passes_test(is_Admin_Organizer, login_url='no_permission')]
-create_event_decorator = [login_required, user_passes_test(is_Admin_Organizer, login_url='no_permission')]
+category_decorator = [login_required, user_passes_test(is_Admin_Manager, login_url='no_permission')]
+create_event_decorator = [login_required, user_passes_test(is_Admin_Manager, login_url='no_permission')]
 
 #class based view
 @method_decorator(event_decorator, name='dispatch')
@@ -164,7 +166,7 @@ class Events(ListView):
         return context
 
 @login_required
-@user_passes_test(is_Admin_Organizer, login_url='no_permission')
+@user_passes_test(is_Admin_Manager, login_url='no_permission')
 def categories(request):
     all_categories = Category.objects.all()
     context={
@@ -185,7 +187,7 @@ class Categories(ListView):
         return context
 
 @login_required
-@user_passes_test(is_Admin_Organizer, login_url='no_permission')
+@user_passes_test(is_Admin_Manager, login_url='no_permission')
 def create_event(request):
     event_form = EventModelForm() # For GET
     selection_form = ParticipantSelectionForm()
@@ -236,7 +238,7 @@ class CreateEvent(CreateView):
         return render(request,self.template_name, context)
 
 @login_required
-@user_passes_test(is_Admin_Organizer, login_url='no_permission')
+@user_passes_test(is_Admin_Manager, login_url='no_permission')
 def create_category(request):
     category_form = CategoryModelForm() # For GET
 
@@ -277,7 +279,7 @@ class CreateCategory(CreateView):
         return render(request,self.template_name,context)
 
 @login_required
-@user_passes_test(is_Admin_Organizer, login_url='no_permission')
+@user_passes_test(is_Admin_Manager, login_url='no_permission')
 def update_event(request, id):
     events = Event.objects.get(id=id)
     selected_participants = events.participant.all()
@@ -310,7 +312,7 @@ def update_event(request, id):
 class UpdateEvent(UpdateView):
     model = Event
     form_class = EventModelForm
-    template_name = 'form.html'
+    template_name = 'update_form.html'
     pk_url_kwarg = 'id'
     success_url = reverse_lazy('update_event')
     
@@ -341,7 +343,7 @@ class UpdateEvent(UpdateView):
         return render(request,self.template_name,context)
 
 @login_required
-@user_passes_test(is_Admin_Organizer, login_url='no_permission')
+@user_passes_test(is_Admin_Manager, login_url='no_permission')
 def update_category(request, id):
     categories = Category.objects.get(id=id)
     category_form = CategoryModelForm(instance = categories) # For GET
@@ -357,10 +359,10 @@ def update_category(request, id):
     context={
         "category_form": category_form
     }
-    return render(request,'category_form.html',context)
+    return render(request,'update_category_form.html',context)
 
 @login_required
-@user_passes_test(is_Admin_Organizer, login_url='no_permission')
+@user_passes_test(is_Admin_Manager, login_url='no_permission')
 def delete_event(request, id):
     if request.method == "POST":
         event = Event.objects.get(id=id)
@@ -370,7 +372,7 @@ def delete_event(request, id):
     return redirect('events')
 
 @login_required
-@user_passes_test(is_Admin_Organizer, login_url='no_permission')
+@user_passes_test(is_Admin_Manager, login_url='no_permission')
 def delete_participant(request, id):
     if request.method == "POST":
         try:
@@ -383,7 +385,7 @@ def delete_participant(request, id):
     return redirect('participants')
 
 @login_required
-@user_passes_test(is_Admin_Organizer, login_url='no_permission')
+@user_passes_test(is_Admin_Manager, login_url='no_permission')
 def delete_category(request, id):
     if request.method == "POST":
         category = Category.objects.get(id=id)
@@ -409,7 +411,7 @@ def search_result(request):
     })
 
 @login_required
-@user_passes_test(is_Organizer, login_url='no_permission')
+@user_passes_test(is_Manager, login_url='no_permission')
 def organizer_dashboard(request):
     # organizer_events = Event.objects.filter(created_by=request.user)
     return render(request, 'dashboard/organizer_dashboard.html')
@@ -422,7 +424,7 @@ def participant_dashboard(request):
 def dashboard(request):
     if is_Admin(request.user):
         return redirect('admin_dashboard')
-    elif is_Organizer(request.user):
+    elif is_Manager(request.user):
         return redirect('organizer_dashboard')
     elif is_Participant(request.user):
         return redirect('participant_dashboard')

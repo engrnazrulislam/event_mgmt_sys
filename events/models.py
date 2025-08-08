@@ -1,5 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.conf import settings
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 # Create your models here.
 # Event Model
@@ -15,7 +18,8 @@ class Event(models.Model):
         default=1,
         related_name='events'
     )
-    participant = models.ManyToManyField(User, related_name='rsvp_events', blank=True)
+    # participant = models.ManyToManyField(User, related_name='rsvp_events', blank=True)
+    participant = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='rsvp_events', blank=True)
     # reverse relation name "rsvp_events"
     asset = models.ImageField(upload_to='events_asset', blank=True, null=True, default='events_asset/default_img.png')
 

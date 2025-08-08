@@ -1,37 +1,42 @@
 from django.shortcuts import render, redirect, HttpResponse
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.models import User, Group
 from users.forms import CustomRegistrationForm, AssignRoleForm, CreateGroupForm, LoginForm, EditProfileForm, CustomPasswordChangeForm, CustomPasswordResetForm, CustomPasswordResetConfirmForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.tokens import default_token_generator
 from django.db.models import Prefetch
-from django.contrib.auth.models import User, Group
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView
-from users.models import UserProfile
+# from users.models import UserProfile
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView, PasswordResetConfirmView
 from django.urls import reverse_lazy
+from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 # Create your views here.
 
 def is_Admin(user):
     return user.groups.filter(name='Admin').exists()
 
-def is_Organizer(user):
+def is_Manager(user):
     return user.groups.filter(name='Organizer').exists()
 
 def is_Participant(user):
     return user.groups.filter(name='Participant').exists()
 
-def is_Admin_Organizer(user):
-    return is_Admin(user) or is_Organizer(user)
+def is_Admin_Manager(user):
+    return is_Admin(user) or is_Manager(user)
 
 def is_Admin_Participant(user):
     return is_Admin(user) or is_Participant(user)
 
 def is_All(user):
-    return is_Admin(user) or is_Organizer(user) or is_Participant(user)
+    return is_Admin(user) or is_Manager(user) or is_Participant(user)
+
+user_decorator = [login_required, user_passes_test(is_All, login_url='no_permission')]
 
 def sign_up(request):
     form = CustomRegistrationForm()
@@ -124,6 +129,7 @@ def group_list(request):
     groups = Group.objects.prefetch_related('permissions').all()
     return render(request,'admin/group_list.html',{'groups':groups})
 
+@method_decorator(user_decorator, name='dispatch')
 class ProfileView(TemplateView):
     template_name = 'accounts/profile.html'
     
@@ -136,14 +142,15 @@ class ProfileView(TemplateView):
         context['name'] = user.get_full_name
         context['member_since'] = user.date_joined
         context['last_login'] = user.last_login
-        context['bio'] = user.userprofile.bio
-        context['phone_number'] = user.userprofile.phone_number
-        # context['bio'] = user.bio
-        context['profile_image'] = user.userprofile.profile_image
-        # context['profile_image'] = user.profile_image
+        # context['bio'] = user.userprofile.bio
+        # context['phone_number'] = user.userprofile.phone_number
+        context['bio'] = user.bio
+        context['phone_number'] = user.phone_number
+        # context['profile_image'] = user.userprofile.profile_image
+        context['profile_image'] = user.profile_image
 
         return context
-
+"""
 class EditProfileView(UpdateView):
     model = User
     form_class = EditProfileForm
@@ -167,7 +174,8 @@ class EditProfileView(UpdateView):
     def form_valid(self, form):
         form.save(commit=True)
         return redirect('profile')
-    
+"""  
+@method_decorator(user_decorator, name='dispatch')
 class ChangePassword(PasswordChangeView):
     template_name = 'accounts/password_change.html'
     form_class = CustomPasswordChangeForm
@@ -203,7 +211,7 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
         return super().form_valid(form)
 
 
-"""
+@method_decorator(user_decorator, name='dispatch')
 class EditProfileView(UpdateView):
     model = settings.AUTH_USER_MODEL
     form_class = EditProfileForm
@@ -216,4 +224,3 @@ class EditProfileView(UpdateView):
     def form_valid(self, form):
         form.save()
         return redirect('profile')
-"""
