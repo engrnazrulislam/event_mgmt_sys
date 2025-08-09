@@ -1,16 +1,19 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Manager Dashboard{% endblock title %}
 {% block content %}
-<div class="grid lg:grid-cols-2 my-8 gap-4 w-11/12 mx-auto">
+<div class="grid lg:grid-cols-2 my-8 gap-4 w-6/12 mx-auto">
     <div class="card-compact bg-base-100 shadow-xl rounded-lg">
         <div class="card-body">
-            <p class="text-justify text-md p-2 mb-4">To create, update and delete event in the systems. Click on the events button</p>
+            <div style="background-image: url('{% static 'images/event.jpg' %}');" class="bg-cover bg-center h-40 rounded-xl w-full">
+            </div>
             <a href="{% url "events" %}" role="btn" class="btn btn-outline btn-secondary">Events</a>
         </div>
     </div>
     <div class="card-compact bg-base-100 shadow-xl rounded-lg">
         <div class="card-body">
-            <p class="text-justify text-md p-2 mb-4">To create, update and delete category in the systems. Click on Category button</p>
+            <div style="background-image: url('{% static 'images/category.jpg' %}');" class="bg-cover bg-center h-40 rounded-xl w-full">
+            </div>
             <a href="{% url "categories" %}" role="btn" class="btn btn-outline btn-accent">Category</a>
         </div>
     </div>

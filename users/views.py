@@ -22,7 +22,7 @@ def is_Admin(user):
     return user.groups.filter(name='Admin').exists()
 
 def is_Manager(user):
-    return user.groups.filter(name='Organizer').exists()
+    return user.groups.filter(name='Manager').exists()
 
 def is_Participant(user):
     return user.groups.filter(name='Participant').exists()
