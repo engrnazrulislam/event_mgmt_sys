@@ -340,7 +340,7 @@ class UpdateEvent(UpdateView):
             return redirect('update_event',id = event.id)
         
         context = self.get_context_data(event_form = event_form, selection_form = selection_form)
-        return render(request,self.template_name,context)
+        return render(request,self.template_name, context)
 
 @login_required
 @user_passes_test(is_Admin_Organizer, login_url='no_permission')
