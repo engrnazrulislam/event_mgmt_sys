@@ -21,20 +21,20 @@ User = get_user_model()
 def is_Admin(user):
     return user.groups.filter(name='Admin').exists()
 
-def is_Manager(user):
-    return user.groups.filter(name='Manager').exists()
+def is_Organizer(user):
+    return user.groups.filter(name='Organizer').exists()
 
 def is_Participant(user):
     return user.groups.filter(name='Participant').exists()
 
-def is_Admin_Manager(user):
-    return is_Admin(user) or is_Manager(user)
+def is_Admin_Organizer(user):
+    return is_Admin(user) or is_Organizer(user)
 
 def is_Admin_Participant(user):
     return is_Admin(user) or is_Participant(user)
 
 def is_All(user):
-    return is_Admin(user) or is_Manager(user) or is_Participant(user)
+    return is_Admin(user) or is_Organizer(user) or is_Participant(user)
 
 user_decorator = [login_required, user_passes_test(is_All, login_url='no_permission')]
 
